@@ -9,7 +9,7 @@ Based on [Karpathy's LLM Wiki concept](https://gist.github.com/karpathy/442a6bf5
 ## How it works
 
 ```
-Your own notes (vault scan)  ─┐
+user_vaults (your notes)     ─┐
 External URLs / text          ├→ wiki add  →  LLM-Wiki-Sources/{year}/{date}-{slug}.md
 Pasted content                ┘                   (raw, immutable)
                                        ↓
@@ -53,10 +53,22 @@ All user-specific configuration lives in `~/.llm-wiki/` — **outside this repo*
 
 | File | Purpose |
 |------|---------|
-| `~/.llm-wiki/config.yaml` | Vault path and settings |
+| `~/.llm-wiki/config.yaml` | Wiki vault path, user vaults to scan, and settings |
 | `~/.llm-wiki/filter-identity.md` | Your identity prompt: who this wiki is for and what matters |
 | `~/.llm-wiki/query-log.md` | Query history, used by `wiki filter evolve` |
 | `~/.llm-wiki/last-scan` | Timestamp of last `wiki scan` run |
+
+The two key fields in `config.yaml`:
+
+```yaml
+# The vault where wiki pages and sources are written
+vault_path: "~/path/to/your/wiki-vault"
+
+# Your personal note vaults that wiki scan reads from
+user_vaults:
+  - "~/path/to/your/main-notes-vault"
+  - "~/path/to/another-vault"   # add as many as needed
+```
 
 `make install` copies example templates from `schema/*.example.*` into `~/.llm-wiki/` on first run. Existing files are never overwritten.
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Shared config loader — sourced by all llm-wiki scripts.
 # Exports: CONFIG_DIR, VAULT, WIKI, SOURCES, MIN_SCORE
+# Function: get_user_vaults  → prints one vault path per line
 set -euo pipefail
 
 CONFIG_DIR="${HOME}/.llm-wiki"
@@ -28,3 +29,21 @@ WIKI="${VAULT}/LLM-Wiki"
 SOURCES="${VAULT}/LLM-Wiki-Sources"
 MIN_SCORE=$(awk '/^min_relevance_score:/{print $2}' "$CONFIG_FILE")
 MIN_SCORE="${MIN_SCORE:-0.4}"
+
+# Parse user_vaults list — prints one path per line, strips quotes.
+# YAML format expected:
+#   user_vaults:
+#     - "/path/to/vault"
+#     - "/path/to/another"
+get_user_vaults() {
+    awk '
+        /^user_vaults:/ { found=1; next }
+        found && /^[[:space:]]*-[[:space:]]/ {
+            line = $0
+            gsub(/^[[:space:]]*-[[:space:]]*"?/, "", line)
+            gsub(/"?[[:space:]]*$/, "", line)
+            if (line != "") print line
+        }
+        found && /^[^[:space:]-]/ { exit }
+    ' "$CONFIG_FILE"
+}

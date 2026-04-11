@@ -1,4 +1,13 @@
-vault_path: "~/path/to/your/obsidian/vault"
+# Path to the vault where LLM-Wiki/ and LLM-Wiki-Sources/ will be created.
+vault_path: "~/path/to/your/wiki-vault"
+
+# Your personal note vaults to scan for new content.
+# wiki scan reads from here; wiki pages are written to vault_path above.
+# Add as many vaults as you need.
+user_vaults:
+  - "~/path/to/your/main-notes-vault"
+  # - "~/path/to/another-vault"
+
 wiki_folder: "LLM-Wiki"
 sources_folder: "LLM-Wiki-Sources"
 
