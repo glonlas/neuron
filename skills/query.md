@@ -55,11 +55,11 @@ If the question cannot be fully answered from existing wiki pages:
 
 1. State what IS known from the wiki.
 2. Identify what's missing: "The wiki doesn't have information about X."
-3. Suggest imports: "To fill this gap, consider: `wiki import <suggested URL or topic>`"
+3. Suggest imports: "To fill this gap, consider: `wiki add <suggested URL or topic>`"
 
 If the wiki has NO relevant pages at all:
 - "No wiki pages match this query. The wiki may not have content on this topic yet."
-- Suggest: "Try `wiki import` with relevant sources, then `wiki ingest` to populate the wiki."
+- Suggest: "Try `wiki add` with relevant sources, then `wiki ingest` to populate the wiki."
 
 ### Step 6: Page Creation (Optional)
 

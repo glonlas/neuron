@@ -62,7 +62,7 @@ Personal knowledge base maintained by LLM. Import sources, filter by relevance, 
 *Specific things: tools, projects, people, companies, protocols.*
 
 <!-- ENTITIES_START -->
-*No entities yet. Run `wiki import` then `wiki ingest` to populate.*
+*No entities yet. Run `wiki add` then `wiki ingest` to populate.*
 <!-- ENTITIES_END -->
 
 ## Concepts
@@ -121,4 +121,4 @@ Report to the user:
 - Path to `_index.md`
 - Whether identity filter was drafted or already existed
 - Config location: `~/.llm-wiki/`
-- Remind them to run `wiki import <source>` to start adding knowledge
+- Remind them to run `wiki add <source>` to start adding knowledge

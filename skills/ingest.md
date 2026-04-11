@@ -26,7 +26,7 @@ SKILL_DIR/scripts/find-pending-sources.sh
 ```
 
 Output is tab-separated: `filepath \t title \t word_count`, one per line.
-If exit code is 1, there are no pending sources — inform the user: "No pending sources to ingest. Run `wiki import` to add sources."
+If exit code is 1, there are no pending sources — inform the user: "No pending sources to ingest. Run `wiki add` to add sources."
 
 Read each listed source file.
 

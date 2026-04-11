@@ -69,7 +69,7 @@ Import and ingest all? [Y/n/select]
 
 ## Step 4: Import each file
 
-For each confirmed file, import it using the same logic as `wiki import` (file mode):
+For each confirmed file, import it using the same logic as `wiki add` (file mode):
 - Read the file content.
 - Save to `SOURCES/{year}/{date}-{slug}.md` with frontmatter:
   ```yaml

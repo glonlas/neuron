@@ -4,7 +4,7 @@ description: >
   Acquire a source into LLM-Wiki-Sources. Accepts URLs (fetches and converts
   to markdown), pasted text, or references to existing vault notes. Each source
   becomes an immutable markdown file with metadata frontmatter.
-  Triggers on: wiki import.
+  Triggers on: wiki add.
 ---
 
 # Wiki Import
@@ -16,20 +16,20 @@ Acquire a raw source and save it to the `LLM-Wiki-Sources/` folder in the Obsidi
 Detect the input type from the user's message:
 
 ### 1. URL Import
-User provides a URL (e.g., `wiki import https://example.com/article`).
+User provides a URL (e.g., `wiki add https://example.com/article`).
 
 1. Use WebFetch to retrieve the page content. Prompt: "Extract the main article content as clean markdown. Remove navigation, ads, footers, and boilerplate. Preserve headings, lists, code blocks, and important formatting."
 2. If WebFetch fails or returns insufficient content, inform the user and suggest pasting the content manually.
 3. Save the extracted content as a source file.
 
 ### 2. Text Import
-User pastes or provides text directly (e.g., `wiki import` followed by a block of text, or "import this: ...").
+User pastes or provides text directly (e.g., `wiki add` followed by a block of text, or "import this: ...").
 
 1. Take the provided text as-is.
 2. Save as a source file.
 
 ### 3. File Import
-User references an existing vault note (e.g., `wiki import [[Some Note]]` or `wiki import /path/to/file.md`).
+User references an existing vault note (e.g., `wiki add [[Some Note]]` or `wiki add /path/to/file.md`).
 
 1. Read the referenced file.
 2. Save a COPY as a source file (do not move or modify the original).

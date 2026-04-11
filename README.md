@@ -10,7 +10,7 @@ Based on [Karpathy's LLM Wiki concept](https://gist.github.com/karpathy/442a6bf5
 
 ```
 Your own notes (vault scan)  ─┐
-External URLs / text          ├→ wiki import  →  LLM-Wiki-Sources/{year}/{date}-{slug}.md
+External URLs / text          ├→ wiki add  →  LLM-Wiki-Sources/{year}/{date}-{slug}.md
 Pasted content                ┘                   (raw, immutable)
                                        ↓
                                wiki ingest   →  scores against identity filter
@@ -70,7 +70,7 @@ All user-specific configuration lives in `~/.llm-wiki/` — **outside this repo*
 | `wiki scan` | Scan vault for recently modified notes and auto-import/ingest them |
 | `wiki scan --since 3d` | Scan notes modified in the last N days (or `--since YYYY-MM-DD`) |
 | `wiki scan --all` | Scan the entire vault regardless of last scan time |
-| `wiki import <url\|text\|file>` | Manually import a single source into `LLM-Wiki-Sources/` |
+| `wiki add <url\|text\|file>` | Manually import a single source into `LLM-Wiki-Sources/` |
 | `wiki ingest` | Process all pending sources through the filter; create wiki pages |
 | `wiki query <question>` | Synthesize an answer from wiki pages with inline citations |
 | `wiki lint` | Health check: broken links, orphans, duplicates, stale pages |
@@ -105,15 +105,15 @@ wiki scan --all        ← entire vault, use once on first setup
 When you read something worth keeping — an article, a thread, a doc:
 
 ```
-wiki import https://some-article.com
+wiki add https://some-article.com
 wiki ingest
 ```
 
 Or import multiple sources at once, then batch-ingest:
 
 ```
-wiki import https://article-1.com
-wiki import https://article-2.com
+wiki add https://article-1.com
+wiki add https://article-2.com
 wiki ingest
 ```
 
@@ -141,7 +141,7 @@ wiki filter evolve     # tune relevance weights based on actual usage
 | When | Command |
 |------|---------|
 | Morning / after writing | `wiki scan` |
-| Read something worth keeping | `wiki import <url>` then `wiki ingest` |
+| Read something worth keeping | `wiki add <url>` then `wiki ingest` |
 | Before starting a project | `wiki query <topic>` |
 | Monthly | `wiki lint` + `wiki filter evolve` |
 

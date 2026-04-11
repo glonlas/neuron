@@ -4,9 +4,9 @@ description: >
   Personal knowledge wiki maintained by LLM. Import sources, ingest into
   Obsidian-native wiki pages with identity-aware filtering, query the
   knowledge base, and lint for health. Triggers on: wiki, llm-wiki,
-  knowledge base, wiki import, wiki ingest, wiki query, wiki lint, wiki filter.
+  knowledge base, wiki add, wiki ingest, wiki query, wiki lint, wiki filter.
 metadata:
-  trigger: "wiki, llm-wiki, knowledge base, wiki import, wiki ingest, wiki query, wiki lint, wiki filter, wiki bootstrap, wiki scan"
+  trigger: "wiki, llm-wiki, knowledge base, wiki add, wiki ingest, wiki query, wiki lint, wiki filter, wiki bootstrap, wiki scan"
 ---
 
 # LLM Wiki — Personal Knowledge Base
@@ -30,7 +30,7 @@ Parse the user's input and dispatch to the appropriate sub-skill. Read the sub-s
 | Command | Sub-skill file | Purpose |
 |---------|---------------|---------|
 | `wiki bootstrap` | `SKILL_DIR/skills/bootstrap.md` | Initialize vault structure and identity prompt |
-| `wiki import <source>` | `SKILL_DIR/skills/import.md` | Acquire a source (URL, text, file) into raw sources |
+| `wiki add <source>` | `SKILL_DIR/skills/add.md` | Acquire a source (URL, text, file) into raw sources |
 | `wiki ingest` | `SKILL_DIR/skills/ingest.md` | Filter and transform pending sources into wiki pages |
 | `wiki query <question>` | `SKILL_DIR/skills/query.md` | Synthesize answers from wiki with citations |
 | `wiki lint` | `SKILL_DIR/skills/lint.md` | Health check the wiki |
