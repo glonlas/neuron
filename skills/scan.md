@@ -27,30 +27,26 @@ Scan the vault for notes modified since the last scan, import them as sources, a
 
 ## Step 1: Find candidate files
 
-Use `find` on the vault root to locate markdown files modified after the cutoff:
+Run the script to find vault notes modified since the cutoff:
 
 ```sh
-find "VAULT" -name "*.md" -newer "CONFIG_DIR/last-scan" -not -path "*/LLM-Wiki/*" -not -path "*/LLM-Wiki-Sources/*" -not -path "*/.obsidian/*"
+# Default: since last scan (or 7 days if first run)
+SKILL_DIR/scripts/find-vault-notes.sh
+
+# With --since flag
+SKILL_DIR/scripts/find-vault-notes.sh --since 3d
+SKILL_DIR/scripts/find-vault-notes.sh --since 2026-04-01
+
+# Entire vault
+SKILL_DIR/scripts/find-vault-notes.sh --all
 ```
 
-For `--since <date>` or `--since <Nd>`, create a temporary reference file with the right timestamp instead of using `last-scan`.
+Pass through any `--since` or `--all` flags from the user's command.
 
-For `--all`, omit the `-newer` flag entirely.
+Output is tab-separated: `relative_path \t mod_date \t word_count`, one per line.
+The script already excludes: LLM-Wiki/, LLM-Wiki-Sources/, .obsidian/, Untitled*, and files < 50 words.
 
-Always exclude:
-- `VAULT/LLM-Wiki/` — wiki pages managed by this skill
-- `VAULT/LLM-Wiki-Sources/` — raw sources managed by this skill
-- `VAULT/.obsidian/` — Obsidian config files
-
-## Step 2: Filter trivial files
-
-Before importing, skip files that are unlikely to contain substantive content:
-
-- Files with fewer than 50 words
-- Files whose entire content is a single heading or template placeholder
-- Files named `Untitled*` with no real content
-
-Show the user what was skipped and why.
+If output is empty, inform the user: "No modified vault notes found since last scan."
 
 ## Step 3: Show the candidate list and confirm
 
@@ -85,7 +81,11 @@ For each confirmed file, import it using the same logic as `wiki import` (file m
   ```
 - The slug is derived from the vault-relative path, e.g. `work-engineering-event-sourcing-research`.
 
-Skip any file already imported (check for existing source with matching `vault_path`).
+Skip any file already imported — check using:
+```sh
+SKILL_DIR/scripts/check-duplicate.sh --vault-path "Work/Engineering/Some Note.md"
+```
+Exit code 0 = already imported (skip). Exit code 1 = new (import it).
 
 ## Step 5: Ingest
 

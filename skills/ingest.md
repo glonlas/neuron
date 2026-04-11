@@ -20,11 +20,15 @@ The core transformation engine. Reads pending sources, scores them against the i
 
 ## Step 1: Find Pending Sources
 
-Search all files in `SOURCES/` for sources where the frontmatter contains `ingested: false`.
+Run the script:
+```sh
+SKILL_DIR/scripts/find-pending-sources.sh
+```
 
-Use Grep to find files matching `ingested: false` in the `SOURCES/` directory. Then read each matching file.
+Output is tab-separated: `filepath \t title \t word_count`, one per line.
+If exit code is 1, there are no pending sources — inform the user: "No pending sources to ingest. Run `wiki import` to add sources."
 
-If no pending sources are found, inform the user: "No pending sources to ingest. Run `wiki import` to add sources."
+Read each listed source file.
 
 ## Step 2: Score Each Source
 
@@ -110,10 +114,12 @@ For each page to create or update:
 
 ## Step 5: Update Source Frontmatter
 
-For each ingested source, update its frontmatter:
-- `ingested: true`
-- `relevance_score: {score}`
-- `wiki_pages`: List of wikilinks to pages created/updated from this source.
+For each ingested source, run the script:
+```sh
+SKILL_DIR/scripts/update-source-meta.sh <filepath> --ingested true --score <score> --wiki-pages '["[[LLM-Wiki/Type/Page]]"]'
+```
+
+This deterministically updates the frontmatter fields. Do NOT manually edit source frontmatter.
 
 ## Step 6: Update _index.md
 

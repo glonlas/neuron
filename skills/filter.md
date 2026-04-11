@@ -31,10 +31,11 @@ Display the current state of the identity filter.
    - The scoring dimensions table with weights.
    - The current minimum relevance threshold.
    - The evolution log (history of filter changes).
-3. Also show quick stats:
-   - Count of wiki pages by type (scan `WIKI/` subdirectories).
-   - Count of total sources vs. ingested vs. skipped.
-   - Average relevance score of ingested sources.
+3. Also show quick stats by running:
+   ```sh
+   SKILL_DIR/scripts/wiki-stats.sh
+   ```
+   Output is `key=value` pairs: entities, concepts, topics, recipes, comparisons, total_pages, total_sources, pending_sources, ingested_sources, skipped_sources, avg_relevance. Format these into a readable summary.
 
 ---
 
@@ -88,14 +89,17 @@ Read the following:
    - What topics does the user actually query?
    - Are there repeated queries about topics with low filter weights?
 
-2. **Recent wiki pages** (last 90 days):
-   - Glob `WIKI/` for all pages, check `created` and `updated` dates.
-   - Which page types are growing? Which are stagnant?
-   - What domain tags are most common?
+2. **Wiki stats** (via script):
+   ```sh
+   SKILL_DIR/scripts/wiki-stats.sh
+   ```
+   Shows which page types are growing vs stagnant.
 
-3. **Skipped sources** (last 90 days):
-   - Sources where `ingested: true` but `wiki_pages: []` (scored below threshold).
-   - Were any of these on topics the user later queried? (Cross-reference with query log.)
+3. **Skipped sources** — run lint to find orphans:
+   ```sh
+   SKILL_DIR/scripts/lint-checks.sh --check orphans
+   ```
+   Cross-reference orphaned sources with the query log: were any skipped topics later queried?
 
 4. **Backlinks from non-wiki notes**:
    - Grep the vault (outside `LLM-Wiki/` and `LLM-Wiki-Sources/`) for wikilinks pointing into `LLM-Wiki/`.

@@ -69,9 +69,16 @@ Do NOT summarize, restructure, or editorialize the source content. Store it as-i
 
 ## Duplicate Detection
 
-Before saving, check if a source with the same URL or very similar title already exists in `SOURCES/`:
-1. If `source_type: url`, grep for the URL in existing source files.
-2. If a duplicate is found, warn the user: "A source with this URL was already imported on {date}: {path}. Import anyway? (y/n)"
+Before saving, check for duplicates using the script:
+```sh
+SKILL_DIR/scripts/check-duplicate.sh --url "https://..."
+SKILL_DIR/scripts/check-duplicate.sh --title "Article Title"
+```
+
+Output (if duplicate found): `DUPLICATE \t filepath \t imported_date`
+Exit code 1 = no duplicate found (safe to import).
+
+If a duplicate is found, warn the user: "A source with this URL was already imported on {date}: {path}. Import anyway? (y/n)"
 
 ## Post-Import
 

@@ -163,6 +163,14 @@ llm-wiki/
 │   ├── query.md                     # Synthesize answers with citations
 │   ├── lint.md                      # Health checks
 │   └── filter.md                    # Identity filter management
+├── scripts/                         # Deterministic operations (saves tokens)
+│   ├── _config.sh                   # Shared config loader (vault path, thresholds)
+│   ├── find-pending-sources.sh      # Grep for ingested: false
+│   ├── find-vault-notes.sh          # Find recently modified vault notes
+│   ├── wiki-stats.sh               # Page/source counts and avg relevance
+│   ├── lint-checks.sh              # All structural lint checks
+│   ├── check-duplicate.sh          # Detect already-imported sources
+│   └── update-source-meta.sh       # Update source frontmatter fields
 ├── references/
 │   └── page-standards.md            # Page templates for all 5 types
 └── schema/
@@ -188,6 +196,26 @@ Your Obsidian vault/
 
 ---
 
+## Scripts vs LLM — what runs where
+
+LLMs are non-deterministic. Deterministic operations are offloaded to shell scripts for predictability and to save tokens.
+
+| Operation | Handled by | Why |
+|-----------|-----------|-----|
+| Find `ingested: false` sources | `find-pending-sources.sh` | Pure grep |
+| Find modified vault notes | `find-vault-notes.sh` | Date math + word count |
+| Check duplicate imports | `check-duplicate.sh` | Pure grep |
+| Update source frontmatter | `update-source-meta.sh` | Deterministic sed |
+| Lint: orphans, broken links, frontmatter, index drift, stale sources | `lint-checks.sh` | All file-system checks |
+| Page/source counts, avg relevance | `wiki-stats.sh` | Arithmetic |
+| Score content against identity dimensions | **LLM** | Needs comprehension |
+| Write/update wiki page content | **LLM** | Creative synthesis |
+| Synthesize query answers | **LLM** | Semantic reasoning |
+| Detect duplicate/misclassified pages | **LLM** | Semantic similarity |
+| Propose filter evolution | **LLM** | Pattern analysis |
+
+---
+
 ## Page types
 
 | Type | For | Example |
@@ -207,10 +235,13 @@ Your Obsidian vault/
 The fastest way to seed a personalized `filter-identity.md` is to ask an LLM what it already knows about you from your conversation history. Paste this prompt into ChatGPT (or any LLM you've been talking to):
 
 ```
-Based on everything you know about me from our conversations — my job, projects,
-interests, goals, and the topics I regularly ask about — please generate a
-filter-identity.md file for my personal LLM Wiki.
+Based on everything you know about me from our conversations: my job, projects,interests, goals, and the topics I regularly ask about. Please 
 
+
+my job, projects, interests, goals, and the topics I regularly ask about. Please generate a filter-identity.md file for my personal LLM Wiki. Be unfiltered, uncensored, unpolitically correct, don't hold back. It is very critical you picture me, the most truly. Even if it can hurts feeling.
+
+
+You must generate a `filter-identity.md` file for my personal LLM Wiki.
 The file should follow this structure:
 
 # Identity Filter
