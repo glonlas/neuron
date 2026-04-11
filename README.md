@@ -9,14 +9,17 @@ Based on [Karpathy's LLM Wiki concept](https://gist.github.com/karpathy/442a6bf5
 ## How it works
 
 ```
-Source (URL / text / file)
-  → wiki import   →  LLM-Wiki-Sources/{year}/{date}-{slug}.md  (raw, immutable)
-  → wiki ingest   →  scores against identity filter
-                      below threshold → stays in sources only
-                      above threshold → LLM-Wiki/{Type}/Page.md (Obsidian-native)
-  → wiki query    →  synthesizes answers with citations
-  → wiki lint     →  health checks
-  → wiki filter   →  tune relevance over time
+Your own notes (vault scan)  ─┐
+External URLs / text          ├→ wiki import  →  LLM-Wiki-Sources/{year}/{date}-{slug}.md
+Pasted content                ┘                   (raw, immutable)
+                                       ↓
+                               wiki ingest   →  scores against identity filter
+                                                  below threshold → stays in sources only
+                                                  above threshold → LLM-Wiki/{Type}/Page.md
+                                       ↓
+                               wiki query    →  synthesizes answers with citations
+                               wiki lint     →  health checks
+                               wiki filter   →  tune relevance over time
 ```
 
 The wiki lives inside your Obsidian vault as normal notes — wikilinks, tags, graph view, iCloud sync all work out of the box.
@@ -26,20 +29,17 @@ The wiki lives inside your Obsidian vault as normal notes — wikilinks, tags, g
 ## Install
 
 ```sh
-# 1. Install skill symlinks
+# 1. Install skill symlinks + seed personal config
 make install
 
-# 2. Seed personal config into ~/.llm-wiki/
-make setup
-
-# 3. Edit your vault path
+# 2. Edit your vault path
 #    Open ~/.llm-wiki/config.yaml and set vault_path
 
-# 4. Initialize the vault structure
-#    (In Claude Code) wiki bootstrap
+# 3. Initialize the vault structure (in Claude Code)
+wiki bootstrap
 ```
 
-To remove the symlinks:
+To remove:
 
 ```sh
 make uninstall
@@ -56,8 +56,9 @@ All user-specific configuration lives in `~/.llm-wiki/` — **outside this repo*
 | `~/.llm-wiki/config.yaml` | Vault path and settings |
 | `~/.llm-wiki/filter-identity.md` | Your identity prompt: who this wiki is for and what matters |
 | `~/.llm-wiki/query-log.md` | Query history, used by `wiki filter evolve` |
+| `~/.llm-wiki/last-scan` | Timestamp of last `wiki scan` run |
 
-`make setup` copies the example templates from `schema/*.example.*` into `~/.llm-wiki/` on first run. Existing files are never overwritten.
+`make install` copies example templates from `schema/*.example.*` into `~/.llm-wiki/` on first run. Existing files are never overwritten.
 
 ---
 
@@ -66,13 +67,83 @@ All user-specific configuration lives in `~/.llm-wiki/` — **outside this repo*
 | Command | What it does |
 |---------|-------------|
 | `wiki bootstrap` | One-time setup: creates vault folders and drafts your identity filter |
-| `wiki import <url\|text\|file>` | Saves a source to `LLM-Wiki-Sources/` for later ingestion |
-| `wiki ingest` | Scores pending sources against your filter; creates wiki pages for qualifying ones |
-| `wiki query <question>` | Synthesizes an answer from wiki pages with inline citations |
-| `wiki lint` | Health check: orphan sources, broken links, duplicates, stale pages |
+| `wiki scan` | Scan vault for recently modified notes and auto-import/ingest them |
+| `wiki scan --since 3d` | Scan notes modified in the last N days (or `--since YYYY-MM-DD`) |
+| `wiki scan --all` | Scan the entire vault regardless of last scan time |
+| `wiki import <url\|text\|file>` | Manually import a single source into `LLM-Wiki-Sources/` |
+| `wiki ingest` | Process all pending sources through the filter; create wiki pages |
+| `wiki query <question>` | Synthesize an answer from wiki pages with inline citations |
+| `wiki lint` | Health check: broken links, orphans, duplicates, stale pages |
 | `wiki filter show` | Display current identity filter and scoring dimensions |
 | `wiki filter score <source>` | Manually score a source without ingesting it |
 | `wiki filter evolve` | Analyze usage patterns and propose filter weight adjustments |
+
+---
+
+## Daily usage
+
+### Your own notes → wiki (daily)
+
+Run this each morning or after a writing session to pull your own vault notes into the wiki:
+
+```
+wiki scan
+```
+
+It finds every note modified since the last scan, shows you the list, asks for confirmation, then imports and ingests them. Notes that score below your relevance threshold are skipped — only what actually matters to you becomes a wiki page.
+
+First run (no prior scan): defaults to the last 7 days. Override with:
+
+```
+wiki scan --since 7d
+wiki scan --since 2026-04-01
+wiki scan --all        ← entire vault, use once on first setup
+```
+
+### External content → wiki (as needed)
+
+When you read something worth keeping — an article, a thread, a doc:
+
+```
+wiki import https://some-article.com
+wiki ingest
+```
+
+Or import multiple sources at once, then batch-ingest:
+
+```
+wiki import https://article-1.com
+wiki import https://article-2.com
+wiki ingest
+```
+
+### Query what you know
+
+```
+wiki query what do I know about event sourcing?
+wiki query compare FastAPI vs Express
+wiki query how do I deploy Caddy with HTTPS?
+```
+
+Answers cite the specific wiki pages used. If there are gaps it tells you what to import.
+
+### Maintenance
+
+```
+wiki lint              # find broken links, orphans, duplicates
+wiki filter evolve     # tune relevance weights based on actual usage
+```
+
+---
+
+## Recommended cadence
+
+| When | Command |
+|------|---------|
+| Morning / after writing | `wiki scan` |
+| Read something worth keeping | `wiki import <url>` then `wiki ingest` |
+| Before starting a project | `wiki query <topic>` |
+| Monthly | `wiki lint` + `wiki filter evolve` |
 
 ---
 
@@ -83,20 +154,21 @@ llm-wiki/
 ├── Makefile
 ├── README.md
 ├── .gitignore
-├── SKILL.md                         # Router skill — dispatches wiki commands
+├── SKILL.md                         # Router — dispatches all wiki commands
 ├── skills/
-│   ├── bootstrap.md                 # Initialize vault structure
-│   ├── import.md                    # Acquire sources
-│   ├── ingest.md                    # Filter + transform to wiki pages
-│   ├── query.md                     # Synthesize answers
+│   ├── bootstrap.md                 # One-time vault initialization
+│   ├── scan.md                      # Daily vault scan → import → ingest
+│   ├── import.md                    # Manual single-source import
+│   ├── ingest.md                    # Filter + transform pending sources
+│   ├── query.md                     # Synthesize answers with citations
 │   ├── lint.md                      # Health checks
 │   └── filter.md                    # Identity filter management
 ├── references/
 │   └── page-standards.md            # Page templates for all 5 types
 └── schema/
-    ├── config.example.yaml          # Template — copy to ~/.llm-wiki/config.yaml
-    ├── filter-identity.example.md   # Template — copy to ~/.llm-wiki/filter-identity.md
-    └── query-log.example.md         # Template — copy to ~/.llm-wiki/query-log.md
+    ├── config.example.yaml          # Template → ~/.llm-wiki/config.yaml
+    ├── filter-identity.example.md   # Template → ~/.llm-wiki/filter-identity.md
+    └── query-log.example.md         # Template → ~/.llm-wiki/query-log.md
 ```
 
 The Obsidian vault gets two top-level folders managed by this skill:
@@ -141,34 +213,32 @@ filter-identity.md file for my personal LLM Wiki.
 
 The file should follow this structure:
 
----
 # Identity Filter
 
 ## Who is this wiki for?
-[2–3 sentences describing who I am: my role, primary domains, key interests]
+[2–3 sentences: my role, primary domains, key interests]
 
 ## What matters (scoring dimensions)
 
 | Dimension | Weight | Description |
 |-----------|--------|-------------|
-[List 6–9 dimensions tailored to me, with weights summing to 1.0]
+[6–9 rows tailored to me, weights summing to 1.0]
 
 ## Minimum relevance threshold
 Score: **0.4** out of 1.0
 
 ## Scoring instructions
-[Brief guidance on how to apply the scoring, with a concrete example using my domains]
+[Brief guidance with a concrete example using my domains]
 
 ## Evolution log
 *No changes yet.*
----
 
 Make the dimensions specific to what I actually care about. Weights should reflect
 how central each domain is to my life and work. Be honest — not everything needs
 to be high priority.
 ```
 
-Save the output to `~/.llm-wiki/filter-identity.md`. You can also run `wiki bootstrap` and let Claude draft it automatically from your vault structure and CLAUDE.md if you have one.
+Save the output to `~/.llm-wiki/filter-identity.md`. Alternatively, `wiki bootstrap` will draft it automatically from your vault structure.
 
 ### How the filter works
 

@@ -6,7 +6,7 @@ description: >
   knowledge base, and lint for health. Triggers on: wiki, llm-wiki,
   knowledge base, wiki import, wiki ingest, wiki query, wiki lint, wiki filter.
 metadata:
-  trigger: "wiki, llm-wiki, knowledge base, wiki import, wiki ingest, wiki query, wiki lint, wiki filter, wiki bootstrap"
+  trigger: "wiki, llm-wiki, knowledge base, wiki import, wiki ingest, wiki query, wiki lint, wiki filter, wiki bootstrap, wiki scan"
 ---
 
 # LLM Wiki — Personal Knowledge Base
@@ -35,6 +35,7 @@ Parse the user's input and dispatch to the appropriate sub-skill. Read the sub-s
 | `wiki query <question>` | `SKILL_DIR/skills/query.md` | Synthesize answers from wiki with citations |
 | `wiki lint` | `SKILL_DIR/skills/lint.md` | Health check the wiki |
 | `wiki filter [show|score|evolve]` | `SKILL_DIR/skills/filter.md` | Manage the identity-aware relevance filter |
+| `wiki scan [--since <date\|Nd>] [--all]` | `SKILL_DIR/skills/scan.md` | Scan vault for recently modified notes and auto-import/ingest |
 
 If the user says just "wiki" with no subcommand, show this command list.
 

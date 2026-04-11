@@ -1,0 +1,120 @@
+---
+name: wiki-scan
+description: >
+  Scan the Obsidian vault for recently modified or created notes and
+  auto-import and ingest them. Designed for daily ingestion of notes you
+  wrote yourself. Tracks last scan time in ~/.llm-wiki/last-scan so each
+  run only picks up what's new. Triggers on: wiki scan.
+---
+
+# Wiki Scan
+
+Scan the vault for notes modified since the last scan, import them as sources, and ingest them through the identity filter. This is the daily-driver command for turning your own writing into wiki knowledge.
+
+## Pre-flight
+
+1. Read `CONFIG_DIR/config.yaml` for vault path.
+2. Read `CONFIG_DIR/last-scan` for the timestamp of the last scan (a single ISO datetime line, e.g. `2026-04-11T09:00:00`). If the file doesn't exist, treat it as "never scanned" and ask the user for a lookback window (default: 7 days).
+
+## Parsing the command
+
+| Command | Behaviour |
+|---------|-----------|
+| `wiki scan` | Since last scan (or 7 days if first run) |
+| `wiki scan --since 3d` | Last N days (d = days, h = hours) |
+| `wiki scan --since 2026-04-01` | Since a specific date |
+| `wiki scan --all` | Entire vault (ignores last-scan timestamp) |
+
+## Step 1: Find candidate files
+
+Use `find` on the vault root to locate markdown files modified after the cutoff:
+
+```sh
+find "VAULT" -name "*.md" -newer "CONFIG_DIR/last-scan" -not -path "*/LLM-Wiki/*" -not -path "*/LLM-Wiki-Sources/*" -not -path "*/.obsidian/*"
+```
+
+For `--since <date>` or `--since <Nd>`, create a temporary reference file with the right timestamp instead of using `last-scan`.
+
+For `--all`, omit the `-newer` flag entirely.
+
+Always exclude:
+- `VAULT/LLM-Wiki/` — wiki pages managed by this skill
+- `VAULT/LLM-Wiki-Sources/` — raw sources managed by this skill
+- `VAULT/.obsidian/` — Obsidian config files
+
+## Step 2: Filter trivial files
+
+Before importing, skip files that are unlikely to contain substantive content:
+
+- Files with fewer than 50 words
+- Files whose entire content is a single heading or template placeholder
+- Files named `Untitled*` with no real content
+
+Show the user what was skipped and why.
+
+## Step 3: Show the candidate list and confirm
+
+Present the list of files found before doing anything:
+
+```
+Found 4 notes modified since 2026-04-10T08:30:00:
+
+  Work/Engineering/Event Sourcing Research.md   (modified 2026-04-11 09:15)
+  Learning/Languages/Lang Mandarin.md           (modified 2026-04-11 07:42)
+  Cooking - Recipes/Miso Ramen.md               (modified 2026-04-10 21:05)
+  Personal/Health/Sleep Tracking.md             (modified 2026-04-10 19:30)
+
+Import and ingest all? [Y/n/select]
+```
+
+- `Y` or Enter → import all
+- `n` → abort
+- `select` → show numbered list, user picks which ones to include
+
+## Step 4: Import each file
+
+For each confirmed file, import it using the same logic as `wiki import` (file mode):
+- Read the file content.
+- Save to `SOURCES/{year}/{date}-{slug}.md` with frontmatter:
+  ```yaml
+  source_type: vault-note
+  source_url: null
+  vault_path: "Work/Engineering/Event Sourcing Research.md"
+  imported: {today}
+  ingested: false
+  ```
+- The slug is derived from the vault-relative path, e.g. `work-engineering-event-sourcing-research`.
+
+Skip any file already imported (check for existing source with matching `vault_path`).
+
+## Step 5: Ingest
+
+Run the ingest process (same as `wiki ingest`) on all newly imported sources:
+- Score each against `CONFIG_DIR/filter-identity.md`.
+- Create or update wiki pages for sources above the threshold.
+- Skip (but mark ingested) those below the threshold.
+
+## Step 6: Update last-scan timestamp
+
+Write the current datetime to `CONFIG_DIR/last-scan`:
+
+```
+2026-04-11T09:32:00
+```
+
+This ensures the next `wiki scan` only picks up notes modified after this run.
+
+## Step 7: Report
+
+```
+Scan complete — 2026-04-11T09:32:00
+
+Scanned: 4 vault notes
+Imported: 3 (1 already imported, skipped)
+Ingested: 3
+  ✓ Work/Engineering/Event Sourcing Research.md    → Created: LLM-Wiki/Concepts/Event Sourcing.md
+  ✓ Cooking - Recipes/Miso Ramen.md               → Created: LLM-Wiki/Recipes/Miso Ramen.md
+  ✗ Personal/Health/Sleep Tracking.md             → Skipped (score: 0.12, below threshold)
+
+Next scan will pick up notes modified after: 2026-04-11T09:32:00
+```
