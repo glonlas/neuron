@@ -1,0 +1,4 @@
+# Personal config lives in ~/.llm-wiki — never in the repo
+schema/config.yaml
+schema/filter-identity.md
+schema/query-log.md

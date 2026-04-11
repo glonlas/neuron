@@ -1,0 +1,14 @@
+vault_path: "~/path/to/your/obsidian/vault"
+wiki_folder: "LLM-Wiki"
+sources_folder: "LLM-Wiki-Sources"
+
+page_types:
+  - entity
+  - concept
+  - topic
+  - recipe
+  - comparison
+
+tag_prefix: "llm-wiki"
+min_relevance_score: 0.4
+source_date_format: "YYYY-MM-DD"

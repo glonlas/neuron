@@ -1,0 +1,96 @@
+---
+name: wiki-import
+description: >
+  Acquire a source into LLM-Wiki-Sources. Accepts URLs (fetches and converts
+  to markdown), pasted text, or references to existing vault notes. Each source
+  becomes an immutable markdown file with metadata frontmatter.
+  Triggers on: wiki import.
+---
+
+# Wiki Import
+
+Acquire a raw source and save it to the `LLM-Wiki-Sources/` folder in the Obsidian vault. Sources are immutable after import — they represent the original material exactly as received.
+
+## Input Modes
+
+Detect the input type from the user's message:
+
+### 1. URL Import
+User provides a URL (e.g., `wiki import https://example.com/article`).
+
+1. Use WebFetch to retrieve the page content. Prompt: "Extract the main article content as clean markdown. Remove navigation, ads, footers, and boilerplate. Preserve headings, lists, code blocks, and important formatting."
+2. If WebFetch fails or returns insufficient content, inform the user and suggest pasting the content manually.
+3. Save the extracted content as a source file.
+
+### 2. Text Import
+User pastes or provides text directly (e.g., `wiki import` followed by a block of text, or "import this: ...").
+
+1. Take the provided text as-is.
+2. Save as a source file.
+
+### 3. File Import
+User references an existing vault note (e.g., `wiki import [[Some Note]]` or `wiki import /path/to/file.md`).
+
+1. Read the referenced file.
+2. Save a COPY as a source file (do not move or modify the original).
+
+## Source File Format
+
+Save to: `SOURCES/{current_year}/{YYYY-MM-DD}-{slug}.md`
+
+Where:
+- `SOURCES` = `VAULT/LLM-Wiki-Sources` (from config.yaml)
+- `{current_year}` = e.g., `2026`
+- `{YYYY-MM-DD}` = today's date
+- `{slug}` = lowercase-kebab-case derived from the title or URL. Max 60 characters. Examples:
+  - URL `https://karpathy.github.io/2025/llm-wiki` → `karpathy-llm-wiki`
+  - Title "How to Deploy FastAPI" → `how-to-deploy-fastapi`
+  - If no title, use a descriptive slug from the content
+
+### Frontmatter
+
+```yaml
+---
+title: "Original Title or User-Provided Title"
+source_type: url | text | file
+source_url: "https://..." | null
+imported: YYYY-MM-DD
+ingested: false
+relevance_score: null
+wiki_pages: []
+---
+```
+
+### Body
+
+The raw content follows the frontmatter. For URL imports, this is the extracted markdown. For text imports, the user's text. For file imports, the file content.
+
+Do NOT summarize, restructure, or editorialize the source content. Store it as-is. The ingestion step handles transformation.
+
+## Duplicate Detection
+
+Before saving, check if a source with the same URL or very similar title already exists in `SOURCES/`:
+1. If `source_type: url`, grep for the URL in existing source files.
+2. If a duplicate is found, warn the user: "A source with this URL was already imported on {date}: {path}. Import anyway? (y/n)"
+
+## Post-Import
+
+After saving the source file:
+1. Confirm to the user: "Imported: `{source_path}` ({word_count} words)"
+2. Remind them: "Run `wiki ingest` to filter and create wiki pages from pending sources."
+
+## Batch Import
+
+If the user provides multiple URLs or texts at once, import each one sequentially. Report a summary at the end:
+```
+Imported 3 sources:
+- LLM-Wiki-Sources/2026/2026-04-11-karpathy-llm-wiki.md (2,340 words)
+- LLM-Wiki-Sources/2026/2026-04-11-baljanak-learning-filter.md (1,890 words)
+- LLM-Wiki-Sources/2026/2026-04-11-fastapi-deployment-guide.md (3,100 words)
+```
+
+## Error Handling
+
+- If WebFetch fails, suggest the user paste the content manually.
+- If the vault path doesn't exist or LLM-Wiki-Sources/ is missing, suggest running `wiki bootstrap` first.
+- If the year subfolder doesn't exist, create it with `mkdir -p`.
