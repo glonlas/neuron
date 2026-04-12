@@ -2,3 +2,6 @@
 schema/config.yaml
 schema/filter-identity.md
 schema/query-log.md
+
+# OS artifacts
+.DS_Store
