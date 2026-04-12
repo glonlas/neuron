@@ -1,42 +1,64 @@
-# llm-wiki
+# Neuron
 
-A personal knowledge base skill for Claude Code. Import sources, filter by relevance, and build a compounding wiki that lives natively in your Obsidian vault.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-blueviolet.svg)]()
 
-Based on [Karpathy's LLM Wiki concept](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and [Baljanak's identity-aware learning filter](https://gist.github.com/baljanak/f233d3e321d353d34f2f6663369b3105). Built from scratch.
+A Claude Code skill that builds a personal, compounding knowledge wiki inside your Obsidian vault. Import sources from URLs, notes, or text — Neuron filters them through your identity profile, transforms qualifying content into structured wiki pages, and keeps the whole thing healthy over time.
+
+Inspired by [Karpathy's LLM Wiki concept](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and [Baljanak's identity-aware learning filter](https://gist.github.com/baljanak/f233d3e321d353d34f2f6663369b3105). Built from scratch.
 
 ---
 
 ## How it works
 
 ```
-user_vaults (your notes)     ─┐
-External URLs / text          ├→ wiki add  →  LLM-Wiki-Sources/{year}/{date}-{slug}.md
-Pasted content                ┘                   (raw, immutable)
-                                       ↓
-                               wiki ingest   →  scores against identity filter
-                                                  below threshold → stays in sources only
-                                                  above threshold → LLM-Wiki/{Type}/Page.md
-                                       ↓
-                               wiki query    →  synthesizes answers with citations
-                               wiki lint     →  health checks
-                               wiki filter   →  tune relevance over time
+Your vaults (personal notes)     ─┐
+External URLs / text              ├→ wiki add  →  LLM-Wiki-Sources/{year}/{date}-{slug}.md
+Pasted content                    ┘                   (raw, immutable)
+                                         ↓
+                                 wiki ingest   →  scores against identity filter
+                                                    below threshold → stays in sources only
+                                                    above threshold → LLM-Wiki/{Type}/Page.md
+                                         ↓
+                                 wiki query    →  synthesizes answers with citations
+                                 wiki lint     →  health checks
+                                 wiki filter   →  tune relevance over time
 ```
 
-The wiki lives inside your Obsidian vault as normal notes — wikilinks, tags, graph view, iCloud sync all work out of the box.
+The wiki lives inside your Obsidian vault as normal markdown — wikilinks, tags, graph view, and sync all work out of the box.
+
+---
+
+## Prerequisites
+
+- [Claude Code](https://claude.ai/code) (CLI, desktop app, or IDE extension)
+- [Obsidian](https://obsidian.md/) vault (or any folder — Obsidian is optional but recommended)
+- Bash 4+ (macOS and Linux supported)
 
 ---
 
 ## Install
 
 ```sh
-# 1. Install skill symlinks + seed personal config
+# 1. Clone the repo
+git clone https://github.com/glonlas/neuron.git
+cd neuron
+
+# 2. Install skill symlinks + seed personal config
 make install
 
-# 2. Edit your vault path
+# 3. Edit your vault path
 #    Open ~/.llm-wiki/config.yaml and set vault_path
 
-# 3. Initialize the vault structure (in Claude Code)
+# 4. Initialize the vault structure (in Claude Code)
 wiki bootstrap
+```
+
+To validate your setup:
+
+```sh
+scripts/doctor.sh
 ```
 
 To remove:
@@ -109,7 +131,7 @@ First run (no prior scan): defaults to the last 7 days. Override with:
 ```
 wiki scan --since 7d
 wiki scan --since 2026-04-01
-wiki scan --all        ← entire vault, use once on first setup
+wiki scan --all        # entire vault, use once on first setup
 ```
 
 ### External content → wiki (as needed)
@@ -162,27 +184,30 @@ wiki filter evolve     # tune relevance weights based on actual usage
 ## File structure
 
 ```
-llm-wiki/
+neuron/
 ├── Makefile
 ├── README.md
+├── LICENSE
+├── CONTRIBUTING.md
 ├── .gitignore
 ├── SKILL.md                         # Router — dispatches all wiki commands
 ├── skills/
 │   ├── bootstrap.md                 # One-time vault initialization
 │   ├── scan.md                      # Daily vault scan → import → ingest
-│   ├── import.md                    # Manual single-source import
+│   ├── add.md                       # Manual single-source import
 │   ├── ingest.md                    # Filter + transform pending sources
 │   ├── query.md                     # Synthesize answers with citations
 │   ├── lint.md                      # Health checks
 │   └── filter.md                    # Identity filter management
 ├── scripts/                         # Deterministic operations (saves tokens)
-│   ├── _config.sh                   # Shared config loader (vault path, thresholds)
+│   ├── _config.sh                   # Shared config loader + cross-platform helpers
 │   ├── find-pending-sources.sh      # Grep for ingested: false
 │   ├── find-vault-notes.sh          # Find recently modified vault notes
 │   ├── wiki-stats.sh               # Page/source counts and avg relevance
 │   ├── lint-checks.sh              # All structural lint checks
 │   ├── check-duplicate.sh          # Detect already-imported sources
-│   └── update-source-meta.sh       # Update source frontmatter fields
+│   ├── update-source-meta.sh       # Update source frontmatter fields
+│   └── doctor.sh                   # Setup validation
 ├── references/
 │   └── page-standards.md            # Page templates for all 5 types
 └── schema/
@@ -235,7 +260,7 @@ LLMs are non-deterministic. Deterministic operations are offloaded to shell scri
 | Entity | Specific thing: tool, project, person, company | FastAPI, Base Network |
 | Concept | Idea, pattern, principle | Event Sourcing, Gas Fee Optimization |
 | Topic | Broad area collecting related pages | Crypto Trading, Photography |
-| Recipe | How-to procedure (code or cooking) | Deploy Caddy, Crème Brulée |
+| Recipe | How-to procedure (code or cooking) | Deploy Caddy, Miso Ramen |
 | Comparison | Side-by-side with explicit axes | AVIF vs WebP, FastAPI vs Express |
 
 ---
@@ -247,25 +272,24 @@ LLMs are non-deterministic. Deterministic operations are offloaded to shell scri
 The fastest way to seed a personalized `filter-identity.md` is to ask an LLM what it already knows about you from your conversation history. Paste this prompt into ChatGPT (or any LLM you've been talking to):
 
 ```
-Based on everything you know about me from our conversations: my job, projects,interests, goals, and the topics I regularly ask about. Please 
+Based on everything you know about me from our conversations — my job, projects,
+interests, goals, and the topics I regularly ask about — please generate a
+filter-identity.md file for my personal LLM Wiki.
 
+Be specific and honest. The more precise the identity, the sharper the filtering.
 
-my job, projects, interests, goals, and the topics I regularly ask about. Please generate a filter-identity.md file for my personal LLM Wiki. Be unfiltered, uncensored, unpolitically correct, don't hold back. It is very critical you picture me, the most truly. Even if it can hurts feeling.
-
-
-You must generate a `filter-identity.md` file for my personal LLM Wiki.
-The file should follow this structure:
+Structure:
 
 # Identity Filter
 
 ## Who is this wiki for?
-[2–3 sentences: my role, primary domains, key interests]
+[2-3 sentences: my role, primary domains, key interests]
 
 ## What matters (scoring dimensions)
 
 | Dimension | Weight | Description |
 |-----------|--------|-------------|
-[6–9 rows tailored to me, weights summing to 1.0]
+[6-9 rows tailored to me, weights summing to 1.0]
 
 ## Minimum relevance threshold
 Score: **0.4** out of 1.0
@@ -277,14 +301,46 @@ Score: **0.4** out of 1.0
 *No changes yet.*
 
 Make the dimensions specific to what I actually care about. Weights should reflect
-how central each domain is to my life and work. Be honest — not everything needs
-to be high priority.
+how central each domain is to my life and work.
 ```
 
 Save the output to `~/.llm-wiki/filter-identity.md`. Alternatively, `wiki bootstrap` will draft it automatically from your vault structure.
 
 ### How the filter works
 
-The filter at `~/.llm-wiki/filter-identity.md` defines scoring dimensions and weights. Each source is scored 0–1 against each dimension; the weighted sum is compared against a minimum threshold (default: 0.4). Sources below the threshold are marked ingested but don't get wiki pages — they stay in `LLM-Wiki-Sources/` for reference without cluttering the wiki.
+The filter at `~/.llm-wiki/filter-identity.md` defines scoring dimensions and weights. Each source is scored 0-1 against each dimension; the weighted sum is compared against a minimum threshold (default: 0.4). Sources below the threshold are marked ingested but don't get wiki pages — they stay in `LLM-Wiki-Sources/` for reference without cluttering the wiki.
 
 Run `wiki filter evolve` periodically to tune weights based on what you actually query and link to. All filter changes require your approval and apply to future ingests only — existing pages are never retroactively removed.
+
+---
+
+## Troubleshooting
+
+| Error | Fix |
+|-------|-----|
+| `Config not found at ~/.llm-wiki/config.yaml` | Run `make install` to create the config directory |
+| `vault_path not set` | Edit `~/.llm-wiki/config.yaml` and set your vault path |
+| `Vault not found at ...` | Check that the path in `config.yaml` is correct and the directory exists |
+| `No user_vaults configured` | Add at least one vault path under `user_vaults:` in `config.yaml` |
+| Scripts fail on Linux | Check `bash --version` is 4+; ensure scripts are executable (`chmod +x scripts/*.sh`) |
+
+Run `scripts/doctor.sh` for a comprehensive setup check.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+## Credits
+
+- [Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the LLM Wiki concept: a persistent, LLM-maintained knowledge base that compounds over time
+- [Baljanak](https://gist.github.com/baljanak/f233d3e321d353d34f2f6663369b3105) — identity-aware learning filter: scoring sources against personal relevance dimensions with evolving weights
+
+---
+
+## License
+
+[MIT](LICENSE)
