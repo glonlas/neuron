@@ -1,5 +1,6 @@
-SKILL_NAME  := llm-wiki
-SKILL_DIR   := $(CURDIR)
+SKILL_NAME  := neuron
+SKILL_DIR   := $(CURDIR)/skill
+REPO_DIR    := $(CURDIR)
 CONFIG_DIR  := $(HOME)/.llm-wiki
 
 AGENTS_SKILLS := $(HOME)/.agents/skills
@@ -32,9 +33,9 @@ install: setup
 	@echo " Then save the output to:"
 	@echo "   $(CONFIG_DIR)/filter-identity.md"
 	@echo ""
-	@echo " Finally, edit your vault path and run wiki bootstrap:"
+	@echo " Finally, edit your vault path and run neuron bootstrap:"
 	@echo "   1. edit $(CONFIG_DIR)/config.yaml  (set vault_path)"
-	@echo "   2. wiki bootstrap                   (in Claude Code)"
+	@echo "   2. neuron bootstrap                 (in Claude Code)"
 	@echo ""
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
@@ -42,19 +43,19 @@ setup:
 	@echo "Setting up personal config at $(CONFIG_DIR)..."
 	@mkdir -p "$(CONFIG_DIR)"
 	@if [ ! -f "$(CONFIG_DIR)/config.yaml" ]; then \
-		cp "$(SKILL_DIR)/schema/config.example.yaml" "$(CONFIG_DIR)/config.yaml" && \
+		cp "$(REPO_DIR)/schema/config.example.yaml" "$(CONFIG_DIR)/config.yaml" && \
 		echo "  created: $(CONFIG_DIR)/config.yaml"; \
 	else \
 		echo "  exists:  $(CONFIG_DIR)/config.yaml"; \
 	fi
 	@if [ ! -f "$(CONFIG_DIR)/filter-identity.md" ]; then \
-		cp "$(SKILL_DIR)/schema/filter-identity.example.md" "$(CONFIG_DIR)/filter-identity.md" && \
+		cp "$(REPO_DIR)/schema/filter-identity.example.md" "$(CONFIG_DIR)/filter-identity.md" && \
 		echo "  created: $(CONFIG_DIR)/filter-identity.md"; \
 	else \
 		echo "  exists:  $(CONFIG_DIR)/filter-identity.md"; \
 	fi
 	@if [ ! -f "$(CONFIG_DIR)/query-log.md" ]; then \
-		cp "$(SKILL_DIR)/schema/query-log.example.md" "$(CONFIG_DIR)/query-log.md" && \
+		cp "$(REPO_DIR)/schema/query-log.example.md" "$(CONFIG_DIR)/query-log.md" && \
 		echo "  created: $(CONFIG_DIR)/query-log.md"; \
 	else \
 		echo "  exists:  $(CONFIG_DIR)/query-log.md"; \
