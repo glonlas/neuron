@@ -11,8 +11,8 @@
 # Output (tab-separated, one per line):
 #   absolute_path \t vault_name \t relative_path \t mod_date \t word_count
 #
-# Excludes: LLM-Wiki/, LLM-Wiki-Sources/, .obsidian/, Untitled*, files < 50 words
-set -uo pipefail
+# Excludes: wiki folders, .obsidian/, Untitled*, files < 50 words
+set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "${SCRIPT_DIR}/_config.sh"
 
@@ -37,9 +37,9 @@ if [ "$ALL" = false ]; then
     if [ -n "$SINCE" ]; then
         CLEANUP_REF=$(mktemp)
         if [[ "$SINCE" =~ ^([0-9]+)d$ ]]; then
-            touch -t "$(date -v-"${BASH_REMATCH[1]}"d +%Y%m%d%H%M.%S)" "$CLEANUP_REF"
+            touch -t "$(portable_date_ago "${BASH_REMATCH[1]}" d)" "$CLEANUP_REF"
         elif [[ "$SINCE" =~ ^([0-9]+)h$ ]]; then
-            touch -t "$(date -v-"${BASH_REMATCH[1]}"H +%Y%m%d%H%M.%S)" "$CLEANUP_REF"
+            touch -t "$(portable_date_ago "${BASH_REMATCH[1]}" h)" "$CLEANUP_REF"
         else
             TS=$(echo "$SINCE" | sed 's/-//g')
             touch -t "${TS}0000.00" "$CLEANUP_REF"
@@ -49,7 +49,7 @@ if [ "$ALL" = false ]; then
         FIND_ARGS=(-newer "${CONFIG_DIR}/last-scan")
     else
         CLEANUP_REF=$(mktemp)
-        touch -t "$(date -v-7d +%Y%m%d%H%M.%S)" "$CLEANUP_REF"
+        touch -t "$(portable_date_ago 7 d)" "$CLEANUP_REF"
         FIND_ARGS=(-newer "$CLEANUP_REF")
     fi
 fi
@@ -71,6 +71,8 @@ while IFS= read -r user_vault; do
     find "$user_vault" -name "*.md" \
         ${FIND_ARGS[@]+"${FIND_ARGS[@]}"} \
         -not -path "*/.obsidian/*" \
+        -not -path "*/${WIKI_FOLDER}/*" \
+        -not -path "*/${SOURCES_FOLDER}/*" \
         -not -name "Untitled*" \
         2>/dev/null | sort | while IFS= read -r f; do
         printf "%s\t%s\n" "$f" "$vault_name"
@@ -88,7 +90,6 @@ while IFS=$'\t' read -r f vault_name; do
     [ -z "$f" ] && continue
     wc_count=$(wc -w < "$f" 2>/dev/null | tr -d ' ')
     [ "${wc_count:-0}" -lt 50 ] && continue
-    vault_root="$(dirname "$f")"
     # Walk up to find the vault root by matching vault_name
     abs_vault=""
     candidate="$f"
@@ -103,6 +104,6 @@ while IFS=$'\t' read -r f vault_name; do
         abs_vault="$(dirname "$f")"
     fi
     rel="${f#"${abs_vault}"/}"
-    mod=$(stat -f '%Sm' -t '%Y-%m-%d %H:%M' "$f" 2>/dev/null || echo "unknown")
+    mod=$(portable_stat_mtime "$f")
     printf "%s\t%s\t%s\t%s\t%s\n" "$f" "$vault_name" "$rel" "$mod" "$wc_count"
 done < "$PATHFILE"
