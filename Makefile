@@ -27,7 +27,7 @@ install: setup
 	@echo ""
 	@echo " Paste the prompt from URL below into your LLM (ex: ChatGPT or any LLM that knows you):"
 	@echo ""
-	@echo "https://github.com/glonlas/neuron?tab=readme-ov-file#generating-your-filter-identitymd"
+	@echo "https://github.com/glonlas/neuron/blob/main/docs/configuration.md#generating-your-filter-identitymd"
 	@echo ""
 	@echo " Then save the output to:"
 	@echo "   $(CONFIG_DIR)/filter-identity.md"
