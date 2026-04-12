@@ -32,28 +32,28 @@ fi
 
 search_in_sources() {
     local pattern="$1"
-    grep -rl "$pattern" "$SOURCES" --include="*.md" 2>/dev/null | while IFS= read -r f; do
+    # Use -F for fixed-string matching (no regex interpretation of URLs)
+    grep -Frl "$pattern" "$SOURCES" --include="*.md" 2>/dev/null | while IFS= read -r f; do
         imported=$(sed -n 's/^imported: *\(.*\)/\1/p' "$f" | head -1)
         printf "DUPLICATE\t%s\t%s\n" "$f" "${imported:-unknown}"
     done
 }
 
 if [ -n "$URL" ]; then
-    search_in_sources "$URL"
+    pattern="$URL"
 elif [ -n "$VAULT_PATH" ]; then
-    search_in_sources "vault_path: \"${VAULT_PATH}\""
+    pattern="vault_path: \"${VAULT_PATH}\""
 elif [ -n "$TITLE" ]; then
-    search_in_sources "title: \"${TITLE}\""
+    pattern="title: \"${TITLE}\""
 else
     echo "ERROR: Provide --url, --vault-path, or --title" >&2
     exit 2
 fi
 
-# If nothing was printed, exit 1 (no duplicate)
-if [ -n "$URL" ]; then
-    grep -qrl "$URL" "$SOURCES" --include="*.md" 2>/dev/null || exit 1
-elif [ -n "$VAULT_PATH" ]; then
-    grep -qrl "vault_path: \"${VAULT_PATH}\"" "$SOURCES" --include="*.md" 2>/dev/null || exit 1
-elif [ -n "$TITLE" ]; then
-    grep -qrl "title: \"${TITLE}\"" "$SOURCES" --include="*.md" 2>/dev/null || exit 1
+# Single search: capture output, print it, and set exit code
+output=$(search_in_sources "$pattern")
+if [ -n "$output" ]; then
+    echo "$output"
+else
+    exit 1
 fi
