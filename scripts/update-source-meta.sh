@@ -6,6 +6,8 @@
 #
 # Only updates fields that are passed. Preserves all other content.
 set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "${SCRIPT_DIR}/_config.sh"
 
 FILE="$1"; shift
 
@@ -26,9 +28,6 @@ while [[ $# -gt 0 ]]; do
         *)            shift;;
     esac
 done
-
-# macOS sed requires -i '' ; GNU sed uses -i
-SED_INPLACE=(-i '')
 
 if [ -n "$INGESTED" ]; then
     sed "${SED_INPLACE[@]}" "s/^ingested: .*/ingested: ${INGESTED}/" "$FILE"
