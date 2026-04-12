@@ -11,12 +11,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "${SCRIPT_DIR}/_config.sh"
 
-CHECK="${1:---check}"
-CHECK_NAME="${2:-all}"
-# Also accept: lint-checks.sh --check orphans  OR  lint-checks.sh (defaults to all)
-if [ "$CHECK" != "--check" ]; then
-    CHECK_NAME="all"
-fi
+# Accept: lint-checks.sh | lint-checks.sh --check orphans | lint-checks.sh orphans
+CHECK_NAME="all"
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --check) CHECK_NAME="$2"; shift 2;;
+        *)       CHECK_NAME="$1"; shift;;
+    esac
+done
 
 REQUIRED_FIELDS="title type created updated sources tags"
 
@@ -123,7 +125,7 @@ run_index_drift() {
 run_stale_sources() {
     echo "=== STALE_PENDING_SOURCES ==="
     [ ! -d "$SOURCES" ] && return
-    cutoff=$(date -v-30d +%Y-%m-%d 2>/dev/null || date -d '30 days ago' +%Y-%m-%d)
+    cutoff=$(portable_date_days_ago 30)
     find "$SOURCES" -name "*.md" -type f 2>/dev/null | sort | while IFS= read -r f; do
         ingested=$(sed -n 's/^ingested: *\(.*\)/\1/p' "$f" | head -1)
         [ "$ingested" != "false" ] && continue
