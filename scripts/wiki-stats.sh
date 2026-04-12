@@ -26,12 +26,16 @@ count_md() {
     fi
 }
 
-entities=$(count_md "${WIKI}/Entities")
-concepts=$(count_md "${WIKI}/Concepts")
-topics=$(count_md "${WIKI}/Topics")
-recipes=$(count_md "${WIKI}/Recipes")
-comparisons=$(count_md "${WIKI}/Comparisons")
-total_pages=$((entities + concepts + topics + recipes + comparisons))
+# Count pages per type dynamically from config
+total_pages=0
+while IFS= read -r ptype; do
+    [ -z "$ptype" ] && continue
+    dir_name=$(_type_to_dir "$ptype")
+    count=$(count_md "${WIKI}/${dir_name}")
+    total_pages=$((total_pages + count))
+    echo "${ptype}s=${count}"
+done <<< "$PAGE_TYPES"
+echo "total_pages=${total_pages}"
 
 # Source stats
 total_sources=0
@@ -62,26 +66,19 @@ if [ -d "$SOURCES" ]; then
 
         # Accumulate scores for average (only non-null, non-zero)
         if [ -n "$score" ] && [ "$score" != "null" ] && [ "$score" != "0" ]; then
-            # Use awk for float arithmetic
-            score_sum=$(awk "BEGIN{printf \"%.4f\", $score_sum + $score}")
+            score_sum=$(awk -v s="$score_sum" -v n="$score" 'BEGIN{printf "%.4f", s + n}')
             score_count=$((score_count + 1))
         fi
     done < <(find "$SOURCES" -name "*.md" -type f 2>/dev/null | sort)
 fi
 
 if [ "$score_count" -gt 0 ]; then
-    avg_relevance=$(awk "BEGIN{printf \"%.2f\", $score_sum / $score_count}")
+    avg_relevance=$(awk -v s="$score_sum" -v c="$score_count" 'BEGIN{printf "%.2f", s / c}')
 else
     avg_relevance="n/a"
 fi
 
 cat <<EOF
-entities=${entities}
-concepts=${concepts}
-topics=${topics}
-recipes=${recipes}
-comparisons=${comparisons}
-total_pages=${total_pages}
 total_sources=${total_sources}
 pending_sources=${pending_sources}
 ingested_sources=${ingested_sources}
