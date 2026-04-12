@@ -1,5 +1,5 @@
 ---
-name: wiki-import
+name: wiki-add
 description: >
   Acquire a source into LLM-Wiki-Sources. Accepts URLs (fetches and converts
   to markdown), pasted text, or references to existing vault notes. Each source

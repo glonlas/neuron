@@ -51,10 +51,10 @@ Present the list grouped by vault before doing anything:
 ```
 Found 4 notes modified since 2026-04-10T08:30:00:
 
-  [Gerald's notes]
+  [My Notes]
   Work/Engineering/Event Sourcing Research.md   (2026-04-11 09:15, 340 words)
-  Learning/Languages/Lang Mandarin.md           (2026-04-11 07:42, 1362 words)
-  Cooking - Recipes/Miso Ramen.md               (2026-04-10 21:05, 232 words)
+  Learning/Languages/Language Notes.md          (2026-04-11 07:42, 1362 words)
+  Cooking/Miso Ramen.md                         (2026-04-10 21:05, 232 words)
   Personal/Health/Sleep Tracking.md             (2026-04-10 19:30, 88 words)
 
 Import and ingest all? [Y/n/select]
@@ -83,7 +83,7 @@ Source frontmatter:
 title: "Note Title"
 source_type: vault-note
 source_url: null
-vault_name: "Gerald's notes"
+vault_name: "My Notes"
 vault_path: "Work/Engineering/Event Sourcing Research.md"
 imported: {today}
 ingested: false
@@ -113,7 +113,7 @@ Write the current datetime to `CONFIG_DIR/last-scan`:
 ```
 Scan complete — 2026-04-11T09:32:00
 
-Vaults scanned: 1 (Gerald's notes)
+Vaults scanned: 1 (My Notes)
 Notes found: 4 | Imported: 3 (1 duplicate skipped) | Ingested: 3
 
   ✓ Work/Engineering/Event Sourcing Research.md  → Created: LLM-Wiki/Concepts/Event Sourcing.md
