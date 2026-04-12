@@ -37,6 +37,35 @@ Validate: `scripts/doctor.sh` | Uninstall: `make uninstall`
 
 ---
 
+## Example
+
+```
+# In Claude Code
+wiki add https://www.reddit.com/r/LocalLLaMA/comments/1s49lvh/gguf_llamacpp_vs_mlx_round_2_your_feedback_tested/
+wiki ingest
+```
+
+Neuron fetches the thread, scores it against your identity filter, and — if it clears your relevance threshold — creates a structured wiki page (e.g. `LLM-Wiki/Comparisons/GGUF llama.cpp vs MLX.md`) with inline citations back to the source.
+
+---
+
+## Automation
+
+Set up cron jobs so the wiki stays fresh without manual effort:
+
+```sh
+# Daily: ingest any pending sources at 8am
+0 8 * * * claude -p "wiki ingest" >> ~/.llm-wiki/cron.log 2>&1
+
+# Weekly: lint + evolve filter every Monday at 9am
+0 9 * * 1 claude -p "wiki lint" >> ~/.llm-wiki/cron.log 2>&1
+0 9 * * 1 claude -p "wiki filter evolve" >> ~/.llm-wiki/cron.log 2>&1
+```
+
+Add to your crontab with `crontab -e`. Pair with `wiki scan` in your morning terminal session to pull overnight note changes.
+
+---
+
 ## Quick reference
 
 | Command | What it does |
