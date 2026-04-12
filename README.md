@@ -6,6 +6,8 @@
 
 A [Claude Code](https://claude.ai/code) skill that turns your reading into a personal, compounding knowledge wiki inside [Obsidian](https://obsidian.md/). Import anything — URLs, notes, pasted text — and Neuron filters it through your identity profile, keeps only what matters, and builds structured wiki pages with full source traceability.
 
+Supports **multiple Obsidian vaults** as sources (e.g. a personal vault and a work vault) — Neuron scans all of them and writes everything into one unified wiki.
+
 ```
 Sources (URLs, notes, text)  →  wiki add   →  raw sources (immutable)
                                     ↓
