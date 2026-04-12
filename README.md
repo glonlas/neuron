@@ -57,14 +57,14 @@ Set up cron jobs so the wiki stays fresh without manual effort:
 
 ```sh
 # Daily: ingest any pending sources at 8am
-0 8 * * * claude -p "wiki ingest" >> ~/.llm-wiki/cron.log 2>&1
+0 8 * * * /path/to/claude -p "wiki ingest" >> ~/.llm-wiki/cron.log 2>&1
 
 # Weekly: lint + evolve filter every Monday at 9am
-0 9 * * 1 claude -p "wiki lint" >> ~/.llm-wiki/cron.log 2>&1
-0 9 * * 1 claude -p "wiki filter evolve" >> ~/.llm-wiki/cron.log 2>&1
+0 9 * * 1 /path/to/claude -p "wiki lint" >> ~/.llm-wiki/cron.log 2>&1
+0 9 * * 1 /path/to/claude -p "wiki filter evolve" >> ~/.llm-wiki/cron.log 2>&1
 ```
 
-Add to your crontab with `crontab -e`. Pair with `wiki scan` in your morning terminal session to pull overnight note changes.
+Add to your crontab with `crontab -e`. Use the full path to `claude` (run `which claude` to find it — typically `/opt/homebrew/bin/claude` on macOS). Pair with `wiki scan` in your morning terminal session to pull overnight note changes.
 
 ---
 
