@@ -9,7 +9,7 @@ git clone https://github.com/glonlas/neuron.git
 cd neuron
 make install
 # Edit ~/.llm-wiki/config.yaml — set vault_path to a test Obsidian vault
-# Run: wiki bootstrap (in Claude Code)
+# Run: neuron bootstrap (in Claude Code)
 ```
 
 ## Architecture
@@ -54,7 +54,7 @@ All scripts must work on both **macOS** and **Linux**. Key differences handled b
 - One logical change per PR
 - Test on macOS if you have access; CI covers Linux
 - If you modify a script, run it manually against a test vault to confirm it works
-- Run `scripts/doctor.sh` to validate setup before submitting
+- Run `skill/scripts/doctor.sh` to validate setup before submitting
 
 ## License
 

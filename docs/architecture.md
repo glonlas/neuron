@@ -15,36 +15,43 @@ Neuron splits work into two layers:
 
 ```
 neuron/
-├── Makefile
+├── Makefile                         # install / uninstall (symlinks skill/ as "neuron")
 ├── README.md
 ├── LICENSE
 ├── CONTRIBUTING.md
 ├── .gitignore
-├── SKILL.md                         # Router — dispatches all wiki commands
-├── skills/
-│   ├── bootstrap.md                 # One-time vault initialization
-│   ├── scan.md                      # Daily vault scan → import → ingest
-│   ├── add.md                       # Manual single-source import
-│   ├── ingest.md                    # Filter + transform pending sources
-│   ├── query.md                     # Synthesize answers with citations
-│   ├── lint.md                      # Health checks
-│   └── filter.md                    # Identity filter management
-├── scripts/                         # Deterministic operations (saves tokens)
-│   ├── _config.sh                   # Shared config loader + cross-platform helpers
-│   ├── find-pending-sources.sh      # Grep for ingested: false
-│   ├── find-vault-notes.sh          # Find recently modified vault notes
-│   ├── wiki-stats.sh               # Page/source counts and avg relevance
-│   ├── lint-checks.sh              # All structural lint checks
-│   ├── check-duplicate.sh          # Detect already-imported sources
-│   ├── update-source-meta.sh       # Update source frontmatter fields
-│   └── doctor.sh                   # Setup validation
-├── references/
-│   └── page-standards.md            # Page templates for all 5 types
-├── docs/                            # Documentation
-└── schema/
-    ├── config.example.yaml          # Template → ~/.llm-wiki/config.yaml
-    ├── filter-identity.example.md   # Template → ~/.llm-wiki/filter-identity.md
-    └── query-log.example.md         # Template → ~/.llm-wiki/query-log.md
+├── docs/                            # Project documentation
+│   ├── architecture.md
+│   ├── commands.md
+│   ├── configuration.md
+│   └── troubleshooting.md
+├── helpers/                         # OS-level automation helpers
+│   └── setup-launchd.sh             # macOS launchd agents for daily/weekly jobs
+├── schema/                          # Config templates (copied to ~/.llm-wiki/ by make install)
+│   ├── config.example.yaml
+│   ├── filter-identity.example.md
+│   └── query-log.example.md
+└── skill/                           # Claude Code skill (symlinked as "neuron")
+    ├── SKILL.md                     # Router — dispatches all neuron commands
+    ├── skills/
+    │   ├── bootstrap.md             # One-time vault initialization
+    │   ├── scan.md                  # Daily vault scan → import → ingest
+    │   ├── add.md                   # Manual single-source import
+    │   ├── ingest.md                # Filter + transform pending sources
+    │   ├── query.md                 # Synthesize answers with citations
+    │   ├── lint.md                  # Health checks
+    │   └── filter.md                # Identity filter management
+    ├── scripts/                     # Deterministic shell operations
+    │   ├── _config.sh               # Config loader + cross-platform helpers
+    │   ├── find-pending-sources.sh  # Grep for ingested: false
+    │   ├── find-vault-notes.sh      # Find recently modified vault notes
+    │   ├── wiki-stats.sh            # Page/source counts and avg relevance
+    │   ├── lint-checks.sh           # All structural lint checks
+    │   ├── check-duplicate.sh       # Detect already-imported sources
+    │   ├── update-source-meta.sh    # Update source frontmatter fields
+    │   └── doctor.sh                # Setup validation
+    └── references/
+        └── page-standards.md        # Page templates for all 5 types
 ```
 
 ---
