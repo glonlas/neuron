@@ -81,7 +81,7 @@ done < <(get_user_vaults)
 
 if [ "$VAULT_COUNT" -eq 0 ]; then
     echo "ERROR: No user_vaults configured in ${CONFIG_FILE}." >&2
-    echo "       Add at least one vault under 'user_vaults:' to use wiki scan." >&2
+    echo "       Add at least one vault under 'user_vaults:' to use neuron scan." >&2
     exit 1
 fi
 

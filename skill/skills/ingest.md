@@ -1,10 +1,10 @@
 ---
-name: wiki-ingest
+name: neuron-ingest
 description: >
   Filter pending sources by relevance and transform qualifying ones into
   Obsidian-native wiki pages. The core engine of LLM Wiki. Reads the identity
   filter, scores each source, creates/updates wiki pages with frontmatter,
-  wikilinks, and source citations. Triggers on: wiki ingest.
+  wikilinks, and source citations. Triggers on: neuron ingest.
 ---
 
 # Wiki Ingest
@@ -26,7 +26,7 @@ SKILL_DIR/scripts/find-pending-sources.sh
 ```
 
 Output is tab-separated: `filepath \t title \t word_count`, one per line.
-If exit code is 1, there are no pending sources — inform the user: "No pending sources to ingest. Run `wiki add` to add sources."
+If exit code is 1, there are no pending sources — inform the user: "No pending sources to ingest. Run `neuron add` to add sources."
 
 Read each listed source file.
 

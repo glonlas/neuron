@@ -1,10 +1,10 @@
 ---
-name: wiki-scan
+name: neuron-scan
 description: >
   Scan all user_vaults for recently modified notes and auto-import/ingest
   them into the wiki. Designed for daily ingestion of notes you wrote yourself.
   Tracks last scan time in ~/.llm-wiki/last-scan so each run only picks up
-  what's new. Triggers on: wiki scan.
+  what's new. Triggers on: neuron scan.
 ---
 
 # Wiki Scan
@@ -19,10 +19,10 @@ The script handles all timing logic. No manual timestamp reading needed.
 
 | Command | Behaviour |
 |---------|-----------|
-| `wiki scan` | Since last scan (or 7 days if first run) |
-| `wiki scan --since 3d` | Last N days (d = days, h = hours) |
-| `wiki scan --since 2026-04-01` | Since a specific date |
-| `wiki scan --all` | All notes in user_vaults (ignores last-scan) |
+| `neuron scan` | Since last scan (or 7 days if first run) |
+| `neuron scan --since 3d` | Last N days (d = days, h = hours) |
+| `neuron scan --since 2026-04-01` | Since a specific date |
+| `neuron scan --all` | All notes in user_vaults (ignores last-scan) |
 
 ## Step 1: Find candidate files
 

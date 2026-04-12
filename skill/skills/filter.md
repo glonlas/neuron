@@ -1,9 +1,9 @@
 ---
-name: wiki-filter
+name: neuron-filter
 description: >
   Manage the identity-aware relevance filter. Three modes: show (display
   current identity and scoring), score (manually score a source), evolve
-  (propose filter updates based on usage patterns). Triggers on: wiki filter.
+  (propose filter updates based on usage patterns). Triggers on: neuron filter.
 ---
 
 # Wiki Filter
@@ -14,10 +14,10 @@ Manage the identity-aware relevance filter that determines what knowledge gets p
 
 Parse the user's input to determine the mode:
 
-- `wiki filter show` → Show mode
-- `wiki filter score <source>` → Score mode
-- `wiki filter evolve` → Evolution mode
-- `wiki filter` (no subcommand) → Default to Show mode
+- `neuron filter show` → Show mode
+- `neuron filter score <source>` → Score mode
+- `neuron filter evolve` → Evolution mode
+- `neuron filter` (no subcommand) → Default to Show mode
 
 ---
 

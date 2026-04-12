@@ -1,10 +1,10 @@
 ---
-name: wiki-add
+name: neuron-add
 description: >
   Acquire a source into LLM-Wiki-Sources. Accepts URLs (fetches and converts
   to markdown), pasted text, or references to existing vault notes. Each source
   becomes an immutable markdown file with metadata frontmatter.
-  Triggers on: wiki add.
+  Triggers on: neuron add.
 ---
 
 # Wiki Import
@@ -16,20 +16,20 @@ Acquire a raw source and save it to the `LLM-Wiki-Sources/` folder in the Obsidi
 Detect the input type from the user's message:
 
 ### 1. URL Import
-User provides a URL (e.g., `wiki add https://example.com/article`).
+User provides a URL (e.g., `neuron add https://example.com/article`).
 
 1. Use WebFetch to retrieve the page content. Prompt: "Extract the main article content as clean markdown. Remove navigation, ads, footers, and boilerplate. Preserve headings, lists, code blocks, and important formatting."
 2. If WebFetch fails or returns insufficient content, inform the user and suggest pasting the content manually.
 3. Save the extracted content as a source file.
 
 ### 2. Text Import
-User pastes or provides text directly (e.g., `wiki add` followed by a block of text, or "import this: ...").
+User pastes or provides text directly (e.g., `neuron add` followed by a block of text, or "import this: ...").
 
 1. Take the provided text as-is.
 2. Save as a source file.
 
 ### 3. File Import
-User references an existing vault note (e.g., `wiki add [[Some Note]]` or `wiki add /path/to/file.md`).
+User references an existing vault note (e.g., `neuron add [[Some Note]]` or `neuron add /path/to/file.md`).
 
 1. Read the referenced file.
 2. Save a COPY as a source file (do not move or modify the original).
@@ -84,7 +84,7 @@ If a duplicate is found, warn the user: "A source with this URL was already impo
 
 After saving the source file:
 1. Confirm to the user: "Imported: `{source_path}` ({word_count} words)"
-2. Remind them: "Run `wiki ingest` to filter and create wiki pages from pending sources."
+2. Remind them: "Run `neuron ingest` to filter and create wiki pages from pending sources."
 
 ## Batch Import
 
@@ -99,5 +99,5 @@ Imported 3 sources:
 ## Error Handling
 
 - If WebFetch fails, suggest the user paste the content manually.
-- If the vault path doesn't exist or LLM-Wiki-Sources/ is missing, suggest running `wiki bootstrap` first.
+- If the vault path doesn't exist or LLM-Wiki-Sources/ is missing, suggest running `neuron bootstrap` first.
 - If the year subfolder doesn't exist, create it with `mkdir -p`.

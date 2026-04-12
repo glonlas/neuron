@@ -1,9 +1,9 @@
 ---
-name: wiki-lint
+name: neuron-lint
 description: >
   Health check the LLM Wiki. Detects orphan sources, broken wikilinks, missing
   frontmatter, stale pages, duplicates, and index drift. Outputs a report with
-  suggested fixes but does not auto-apply. Triggers on: wiki lint.
+  suggested fixes but does not auto-apply. Triggers on: neuron lint.
 ---
 
 # Wiki Lint

@@ -44,7 +44,7 @@ fi
 if [ -f "${CONFIG_DIR}/filter-identity.md" ]; then
     ok "filter-identity.md exists"
 else
-    warn "filter-identity.md not found — run 'wiki bootstrap' or create manually"
+    warn "filter-identity.md not found — run 'neuron bootstrap' or create manually"
 fi
 
 if [ -f "${CONFIG_DIR}/query-log.md" ]; then
@@ -72,13 +72,13 @@ if [ -f "$CONFIG_FILE" ]; then
         if [ -d "${VAULT}/${WIKI_FOLDER}" ]; then
             ok "${WIKI_FOLDER}/ exists"
         else
-            warn "${WIKI_FOLDER}/ not found — run 'wiki bootstrap'"
+            warn "${WIKI_FOLDER}/ not found — run 'neuron bootstrap'"
         fi
 
         if [ -d "${VAULT}/${SOURCES_FOLDER}" ]; then
             ok "${SOURCES_FOLDER}/ exists"
         else
-            warn "${SOURCES_FOLDER}/ not found — run 'wiki bootstrap'"
+            warn "${SOURCES_FOLDER}/ not found — run 'neuron bootstrap'"
         fi
     else
         fail "vault not found at ${VAULT}"
@@ -112,7 +112,7 @@ if [ -f "$CONFIG_FILE" ]; then
         found && /^[^[:space:]-]/ { exit }
     ' "$CONFIG_FILE")
     if [ "$vault_count" -eq 0 ]; then
-        warn "no user_vaults configured (wiki scan will not work)"
+        warn "no user_vaults configured (neuron scan will not work)"
     fi
 else
     fail "skipped user vault checks (no config.yaml)"
