@@ -8,7 +8,7 @@
 | `neuron scan` | Scan vault for recently modified notes and auto-import/ingest them |
 | `neuron scan --since 3d` | Scan notes modified in the last N days (or `--since YYYY-MM-DD`) |
 | `neuron scan --all` | Scan the entire vault regardless of last scan time |
-| `neuron add <url|text|file>` | Manually import a single source into `LLM-Wiki-Sources/` |
+| `neuron add <url|text|file>` | Manually import a single source into `Agents-Neuron-Sources/` |
 | `neuron ingest` | Process all pending sources through the filter; create wiki pages |
 | `neuron query <question>` | Synthesize an answer from wiki pages with inline citations |
 | `neuron lint` | Health check: broken links, orphans, duplicates, stale pages |

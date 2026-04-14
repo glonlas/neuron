@@ -102,7 +102,7 @@ Read the following:
    Cross-reference orphaned sources with the query log: were any skipped topics later queried?
 
 4. **Backlinks from non-wiki notes**:
-   - Grep the vault (outside `LLM-Wiki/` and `LLM-Wiki-Sources/`) for wikilinks pointing into `LLM-Wiki/`.
+   - Grep the vault (outside `Agents-Neuron/` and `Agents-Neuron-Sources/`) for wikilinks pointing into `Agents-Neuron/`.
    - Pages that other notes link to are high-engagement pages.
 
 ### Step 2: Analyze Patterns

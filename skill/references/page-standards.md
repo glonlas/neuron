@@ -1,6 +1,6 @@
 # Page Standards — Wiki Page Templates
 
-Every wiki page MUST have YAML frontmatter and follow the template for its type. All links use Obsidian `[[wikilink]]` syntax. All tags use the `llm-wiki/` prefix.
+Every wiki page MUST have YAML frontmatter and follow the template for its type. All links use Obsidian `[[wikilink]]` syntax. All tags use the `agents-neuron/` prefix.
 
 ---
 
@@ -13,12 +13,12 @@ type: entity | concept | topic | recipe | comparison
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 sources:
-  - "[[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug]]"
+  - "[[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug]]"
 related:
-  - "[[LLM-Wiki/Type/Related Page]]"
+  - "[[Agents-Neuron/Type/Related Page]]"
 tags:
-  - llm-wiki/{type}
-  - llm-wiki/{domain}
+  - agents-neuron/{type}
+  - agents-neuron/{domain}
 relevance_score: 0.0-1.0
 aliases:
   - alternate name
@@ -29,7 +29,7 @@ aliases:
 **Rules:**
 - `sources` lists every raw source that contributed content to this page.
 - `related` lists other wiki pages this page references or is closely connected to.
-- `tags` always includes `llm-wiki/{type}`. Add domain tags like `llm-wiki/engineering`, `llm-wiki/crypto`, `llm-wiki/cooking`, etc.
+- `tags` always includes `agents-neuron/{type}`. Add domain tags like `agents-neuron/engineering`, `agents-neuron/crypto`, `agents-neuron/cooking`, etc.
 - `relevance_score` is the filter's assessment at ingest time.
 - `aliases` enables Obsidian quick-switcher and link autocomplete.
 
@@ -56,7 +56,7 @@ Operational overview. What does it do at runtime or in practice?
 Known issues, edge cases, common mistakes.
 
 ## Sources
-- [[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -82,7 +82,7 @@ What happens when this concept is applied incorrectly or ignored?
 The practical value. Why should someone care about this concept?
 
 ## Sources
-- [[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -97,11 +97,11 @@ What this topic covers and what it explicitly does NOT cover.
 
 ## Key Entities
 Links to entity pages within this topic:
-- [[LLM-Wiki/Entities/Entity Name]] — brief note on relevance
+- [[Agents-Neuron/Entities/Entity Name]] — brief note on relevance
 
 ## Key Concepts
 Links to concept pages within this topic:
-- [[LLM-Wiki/Concepts/Concept Name]] — brief note on relevance
+- [[Agents-Neuron/Concepts/Concept Name]] — brief note on relevance
 
 ## Main Patterns
 Recurring themes, workflows, or approaches observed across this topic.
@@ -110,7 +110,7 @@ Recurring themes, workflows, or approaches observed across this topic.
 What's settled, what's in flux, what gaps remain in our understanding.
 
 ## Sources
-- [[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -138,7 +138,7 @@ How to confirm the recipe worked. Expected output or result.
 Alternative approaches, substitutions, tips from experience.
 
 ## Sources
-- [[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -167,7 +167,7 @@ The most important distinctions, explained in prose.
 Decision guidance: under what circumstances is each subject the better choice?
 
 ## Sources
-- [[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -176,7 +176,7 @@ Decision guidance: under what circumstances is each subject the better choice?
 
 When referencing a source within page content, use:
 ```
-According to [[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Author/Title YYYY]], ...
+According to [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Author/Title YYYY]], ...
 ```
 
 This creates a clickable link in Obsidian that displays the friendly name but links to the source file.
@@ -186,6 +186,6 @@ This creates a clickable link in Obsidian that displays the friendly name but li
 ## Naming Conventions
 
 - **File names**: Use Title Case with spaces (Obsidian handles this well). Example: `Event Sourcing.md`
-- **Folder structure**: `LLM-Wiki/{Type}/{Page Name}.md`
-- **Source files**: `LLM-Wiki-Sources/{year}/{YYYY-MM-DD}-{slug}.md` where slug is lowercase-kebab-case.
+- **Folder structure**: `Agents-Neuron/{Type}/{Page Name}.md`
+- **Source files**: `Agents-Neuron-Sources/{year}/{YYYY-MM-DD}-{slug}.md` where slug is lowercase-kebab-case.
 - **No nested sub-folders** within type folders. Keep it flat per type.

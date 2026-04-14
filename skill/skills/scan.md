@@ -3,7 +3,7 @@ name: neuron-scan
 description: >
   Scan all user_vaults for recently modified notes and auto-import/ingest
   them into the wiki. Designed for daily ingestion of notes you wrote yourself.
-  Tracks last scan time in ~/.llm-wiki/last-scan so each run only picks up
+  Tracks last scan time in ~/.agents-neuron/last-scan so each run only picks up
   what's new. Triggers on: neuron scan.
 ---
 
@@ -116,8 +116,8 @@ Scan complete — 2026-04-11T09:32:00
 Vaults scanned: 1 (My Notes)
 Notes found: 4 | Imported: 3 (1 duplicate skipped) | Ingested: 3
 
-  ✓ Work/Engineering/Event Sourcing Research.md  → Created: LLM-Wiki/Concepts/Event Sourcing.md
-  ✓ Cooking - Recipes/Miso Ramen.md              → Created: LLM-Wiki/Recipes/Miso Ramen.md
+  ✓ Work/Engineering/Event Sourcing Research.md  → Created: Agents-Neuron/Concepts/Event Sourcing.md
+  ✓ Cooking - Recipes/Miso Ramen.md              → Created: Agents-Neuron/Recipes/Miso Ramen.md
   ✗ Personal/Health/Sleep Tracking.md            → Skipped (score: 0.12, below threshold)
 
 Next scan will pick up notes modified after: 2026-04-11T09:32:00

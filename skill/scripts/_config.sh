@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Shared config loader — sourced by all llm-wiki scripts.
+# Shared config loader — sourced by all Agents Neuron scripts.
 # Exports: CONFIG_DIR, VAULT, WIKI, SOURCES, MIN_SCORE, PAGE_TYPES,
 #          SED_INPLACE (array)
 # Functions: get_user_vaults, portable_date_ago, portable_stat_mtime
@@ -59,7 +59,7 @@ portable_date_days_ago() {
 }
 
 # ── Config loading ───────────────────────────────────────────────
-CONFIG_DIR="${HOME}/.llm-wiki"
+CONFIG_DIR="${HOME}/.agents-neuron"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -85,9 +85,9 @@ fi
 # Read folder names from config, with defaults
 _strip_quotes() { sed 's/^"//;s/"$//;s/^'\''//;s/'\''$//'; }
 WIKI_FOLDER=$(awk '/^wiki_folder:/{print $2}' "$CONFIG_FILE" | _strip_quotes)
-WIKI_FOLDER="${WIKI_FOLDER:-LLM-Wiki}"
+WIKI_FOLDER="${WIKI_FOLDER:-Agents-Neuron}"
 SOURCES_FOLDER=$(awk '/^sources_folder:/{print $2}' "$CONFIG_FILE" | _strip_quotes)
-SOURCES_FOLDER="${SOURCES_FOLDER:-LLM-Wiki-Sources}"
+SOURCES_FOLDER="${SOURCES_FOLDER:-Agents-Neuron-Sources}"
 
 WIKI="${VAULT}/${WIKI_FOLDER}"
 SOURCES="${VAULT}/${SOURCES_FOLDER}"

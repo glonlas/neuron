@@ -1,23 +1,23 @@
 ---
 name: neuron-bootstrap
 description: >
-  Initialize the LLM Wiki structure in the Obsidian vault and draft the
+  Initialize the Agents Neuron structure in the Obsidian vault and draft the
   identity filter. Run this once when setting up the wiki for the first time.
   Triggers on: neuron bootstrap, wiki init, wiki setup.
 ---
 
 # Wiki Bootstrap
 
-Initialize the LLM Wiki folder structure in the Obsidian vault and draft an initial identity filter.
+Initialize the Agents Neuron folder structure in the Obsidian vault and draft an initial identity filter.
 
 ## Pre-flight Checks
 
-1. Check if `CONFIG_DIR` (`~/.llm-wiki`) exists.
-   - If not, create it: `mkdir -p ~/.llm-wiki`
+1. Check if `CONFIG_DIR` (`~/.agents-neuron`) exists.
+   - If not, create it: `mkdir -p ~/.agents-neuron`
    - If `CONFIG_DIR/config.yaml` doesn't exist, copy from `SKILL_DIR/schema/config.example.yaml` and prompt the user to set their vault path before continuing.
 2. Read `CONFIG_DIR/config.yaml` to get the vault path.
-3. Check if `VAULT/LLM-Wiki/` already exists.
-   - If it does, warn the user: "LLM Wiki is already initialized. Re-running will not overwrite existing content." Only create missing folders/files.
+3. Check if `VAULT/Agents-Neuron/` already exists.
+   - If it does, warn the user: "Agents Neuron is already initialized. Re-running will not overwrite existing content." Only create missing folders/files.
    - If it doesn't, proceed with full initialization.
 
 ## Step 1: Create Vault Folders
@@ -25,36 +25,36 @@ Initialize the LLM Wiki folder structure in the Obsidian vault and draft an init
 Create the following directories in the Obsidian vault:
 
 ```
-VAULT/LLM-Wiki/
-VAULT/LLM-Wiki/Entities/
-VAULT/LLM-Wiki/Concepts/
-VAULT/LLM-Wiki/Topics/
-VAULT/LLM-Wiki/Recipes/
-VAULT/LLM-Wiki/Comparisons/
-VAULT/LLM-Wiki-Sources/
-VAULT/LLM-Wiki-Sources/{current_year}/
+VAULT/Agents-Neuron/
+VAULT/Agents-Neuron/Entities/
+VAULT/Agents-Neuron/Concepts/
+VAULT/Agents-Neuron/Topics/
+VAULT/Agents-Neuron/Recipes/
+VAULT/Agents-Neuron/Comparisons/
+VAULT/Agents-Neuron-Sources/
+VAULT/Agents-Neuron-Sources/{current_year}/
 ```
 
 Use `mkdir -p` with properly quoted paths (vault paths may contain spaces).
 
 ## Step 2: Create _index.md (Map of Content)
 
-Write `VAULT/LLM-Wiki/_index.md`:
+Write `VAULT/Agents-Neuron/_index.md`:
 
 ```markdown
 ---
-title: "LLM Wiki — Map of Content"
+title: "Agents Neuron — Map of Content"
 type: index
 created: {today}
 updated: {today}
 tags:
-  - llm-wiki/index
+  - agents-neuron/index
 aliases:
   - Wiki Index
-  - LLM Wiki
+  - Agents Neuron
 ---
 
-# LLM Wiki
+# Agents Neuron
 
 Personal knowledge base maintained by LLM. Import sources, filter by relevance, and build compounding knowledge.
 
@@ -120,5 +120,5 @@ Report to the user:
 - Folders created in the vault
 - Path to `_index.md`
 - Whether identity filter was drafted or already existed
-- Config location: `~/.llm-wiki/`
+- Config location: `~/.agents-neuron/`
 - Remind them to run `neuron add <source>` to start adding knowledge

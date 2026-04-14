@@ -1,14 +1,14 @@
 ---
 name: neuron-lint
 description: >
-  Health check the LLM Wiki. Detects orphan sources, broken wikilinks, missing
+  Health check the Agents Neuron wiki. Detects orphan sources, broken wikilinks, missing
   frontmatter, stale pages, duplicates, and index drift. Outputs a report with
   suggested fixes but does not auto-apply. Triggers on: neuron lint.
 ---
 
 # Wiki Lint
 
-Audit the LLM Wiki for structural issues and produce a health report. Does NOT auto-fix — presents findings for user approval.
+Audit the Agents Neuron wiki for structural issues and produce a health report. Does NOT auto-fix — presents findings for user approval.
 
 ## Step 1: Run Deterministic Checks (via script)
 

@@ -1,4 +1,4 @@
-# Contributing to Neuron
+# Contributing to Agents Neuron
 
 Thanks for your interest in contributing. Here's what you need to know.
 
@@ -8,13 +8,13 @@ Thanks for your interest in contributing. Here's what you need to know.
 git clone https://github.com/glonlas/neuron.git
 cd neuron
 make install
-# Edit ~/.llm-wiki/config.yaml — set vault_path to a test Obsidian vault
+# Edit ~/.agents-neuron/config.yaml — set vault_path to a test Obsidian vault
 # Run: neuron bootstrap (in Claude Code)
 ```
 
 ## Architecture
 
-Neuron has two layers:
+Agents Neuron has two layers:
 
 | Layer | What it does | Where |
 |-------|-------------|-------|
@@ -25,7 +25,7 @@ All scripts source `scripts/_config.sh` which provides:
 - Config loading (`VAULT`, `WIKI`, `SOURCES`, `MIN_SCORE`, `PAGE_TYPES`)
 - Cross-platform helpers (`SED_INPLACE`, `portable_date_ago`, `portable_stat_mtime`)
 
-User-specific configuration lives in `~/.llm-wiki/` (outside the repo).
+User-specific configuration lives in `~/.agents-neuron/` (outside the repo).
 
 ## Adding a new sub-skill
 

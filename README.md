@@ -1,12 +1,12 @@
-# Neuron
+# Agents Neuron
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-blueviolet.svg)]()
 
-A [Claude Code](https://claude.ai/code) skill that turns your reading into a personal, compounding knowledge wiki inside [Obsidian](https://obsidian.md/). Import anything — URLs, notes, pasted text — and Neuron filters it through your identity profile, keeps only what matters, and builds structured wiki pages with full source traceability.
+A [Claude Code](https://claude.ai/code) skill that turns your reading into a personal, compounding knowledge wiki inside [Obsidian](https://obsidian.md/). Import anything — URLs, notes, pasted text — and Agents Neuron filters it through your identity profile, keeps only what matters, and builds structured wiki pages with full source traceability.
 
-Supports **multiple Obsidian vaults** as sources (e.g. a personal vault and a work vault) — Neuron scans all of them and writes everything into one unified wiki.
+Supports **multiple Obsidian vaults** as sources (e.g. a personal vault and a work vault) — Agents Neuron scans all of them and writes everything into one unified wiki.
 
 ```
 Sources (URLs, notes, text)  →  neuron add   →  raw sources (immutable)
@@ -20,7 +20,7 @@ Sources (URLs, notes, text)  →  neuron add   →  raw sources (immutable)
                              neuron filter  →  evolve relevance over time
 ```
 
-Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and [Baljanak's learning filter](https://gist.github.com/baljanak/f233d3e321d353d34f2f6663369b3105). Built from scratch.
+Inspired by [Karpathy's original write-up](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and [Baljanak's learning filter](https://gist.github.com/baljanak/f233d3e321d353d34f2f6663369b3105). Built from scratch.
 
 ---
 
@@ -30,8 +30,8 @@ Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914
 
 ```sh
 git clone https://github.com/glonlas/neuron.git && cd neuron
-make install                        # symlinks + seed ~/.llm-wiki/ config
-# Edit ~/.llm-wiki/config.yaml     # set vault_path
+make install                        # symlinks + seed ~/.agents-neuron/ config
+# Edit ~/.agents-neuron/config.yaml # set vault_path
 neuron bootstrap                      # run in Claude Code to init vault
 ```
 
@@ -47,7 +47,7 @@ neuron add https://www.reddit.com/r/LocalLLaMA/comments/1s49lvh/gguf_llamacpp_vs
 neuron ingest
 ```
 
-Neuron fetches the thread, scores it against your identity filter, and — if it clears your relevance threshold — creates a structured wiki page (e.g. `LLM-Wiki/Comparisons/GGUF llama.cpp vs MLX.md`) with inline citations back to the source.
+Agents Neuron fetches the thread, scores it against your identity filter, and — if it clears your relevance threshold — creates a structured wiki page (e.g. `Agents-Neuron/Comparisons/GGUF llama.cpp vs MLX.md`) with inline citations back to the source.
 
 ---
 
@@ -60,14 +60,14 @@ Neuron fetches the thread, scores it against your identity filter, and — if it
 ./helpers/setup-launchd.sh --uninstall  # remove them
 ```
 
-Installs three agents: daily `neuron ingest` at 08:00, weekly `neuron lint` and `neuron filter evolve` on Mondays at 09:00. Logs to `~/.llm-wiki/launchd.log`.
+Installs three agents: daily `neuron ingest` at 08:00, weekly `neuron lint` and `neuron filter evolve` on Mondays at 09:00. Logs to `~/.agents-neuron/launchd.log`.
 
 **Linux / cron** — add to your crontab with `crontab -e` (use the full path from `which claude`):
 
 ```sh
-0 8 * * *   /path/to/claude -p "neuron ingest"        >> ~/.llm-wiki/cron.log 2>&1
-0 9 * * 1   /path/to/claude -p "neuron lint"          >> ~/.llm-wiki/cron.log 2>&1
-5 9 * * 1   /path/to/claude -p "neuron filter evolve" >> ~/.llm-wiki/cron.log 2>&1
+0 8 * * *   /path/to/claude -p "neuron ingest"        >> ~/.agents-neuron/cron.log 2>&1
+0 9 * * 1   /path/to/claude -p "neuron lint"          >> ~/.agents-neuron/cron.log 2>&1
+5 9 * * 1   /path/to/claude -p "neuron filter evolve" >> ~/.agents-neuron/cron.log 2>&1
 ```
 
 Pair with `neuron scan` in your morning terminal session to pull overnight note changes.
@@ -101,7 +101,7 @@ Pair with `neuron scan` in your morning terminal session to pull overnight note 
 
 ## Credits
 
-- [Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the LLM Wiki concept
+- [Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — the original personal knowledge wiki concept
 - [Baljanak](https://gist.github.com/baljanak/f233d3e321d353d34f2f6663369b3105) — identity-aware learning filter
 
 ## License

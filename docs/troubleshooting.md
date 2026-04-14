@@ -4,8 +4,8 @@
 
 | Error | Fix |
 |-------|-----|
-| `Config not found at ~/.llm-wiki/config.yaml` | Run `make install` to create the config directory |
-| `vault_path not set` | Edit `~/.llm-wiki/config.yaml` and set your vault path |
+| `Config not found at ~/.agents-neuron/config.yaml` | Run `make install` to create the config directory |
+| `vault_path not set` | Edit `~/.agents-neuron/config.yaml` and set your vault path |
 | `Vault not found at ...` | Check that the path in `config.yaml` is correct and the directory exists |
 | `No user_vaults configured` | Add at least one vault path under `user_vaults:` in `config.yaml` |
 | Scripts fail on Linux | Check `bash --version` is 4+; ensure scripts are executable (`chmod +x scripts/*.sh`) |

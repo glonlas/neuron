@@ -15,7 +15,7 @@
 set -euo pipefail
 
 LAUNCHD_DIR="${HOME}/Library/LaunchAgents"
-LOG_DIR="${HOME}/.llm-wiki"
+LOG_DIR="${HOME}/.agents-neuron"
 
 # Resolve claude binary path
 CLAUDE_BIN=$(command -v claude 2>/dev/null || true)

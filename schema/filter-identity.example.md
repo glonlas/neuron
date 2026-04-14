@@ -30,7 +30,7 @@ Weights must sum to 1.0.
 Score: **0.4** out of 1.0
 
 Sources scoring below this threshold will be marked as ingested but will NOT get wiki pages.
-They remain searchable in LLM-Wiki-Sources/ but don't clutter the curated wiki.
+They remain searchable in Agents-Neuron-Sources/ but don't clutter the curated wiki.
 
 ## Scoring instructions
 

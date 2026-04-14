@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Validate that Neuron (llm-wiki) is correctly set up.
+# Validate that Agents Neuron is correctly set up.
 #
 # Usage: doctor.sh
 #
@@ -8,7 +8,7 @@
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-CONFIG_DIR="${HOME}/.llm-wiki"
+CONFIG_DIR="${HOME}/.agents-neuron"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 
 pass=0
@@ -19,7 +19,7 @@ ok()   { pass=$((pass + 1)); echo "  OK   $1"; }
 fail() { fail=$((fail + 1)); echo "  FAIL $1"; }
 warn() { warn=$((warn + 1)); echo "  WARN $1"; }
 
-echo "Neuron doctor"
+echo "Agents Neuron doctor"
 echo "============="
 echo ""
 
@@ -65,9 +65,9 @@ if [ -f "$CONFIG_FILE" ]; then
         ok "vault exists at ${VAULT}"
 
         WIKI_FOLDER=$(awk '/^wiki_folder:/{print $2}' "$CONFIG_FILE" | sed 's/^"//;s/"$//')
-        WIKI_FOLDER="${WIKI_FOLDER:-LLM-Wiki}"
+        WIKI_FOLDER="${WIKI_FOLDER:-Agents-Neuron}"
         SOURCES_FOLDER=$(awk '/^sources_folder:/{print $2}' "$CONFIG_FILE" | sed 's/^"//;s/"$//')
-        SOURCES_FOLDER="${SOURCES_FOLDER:-LLM-Wiki-Sources}"
+        SOURCES_FOLDER="${SOURCES_FOLDER:-Agents-Neuron-Sources}"
 
         if [ -d "${VAULT}/${WIKI_FOLDER}" ]; then
             ok "${WIKI_FOLDER}/ exists"

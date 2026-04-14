@@ -1,7 +1,7 @@
 ---
 name: neuron-query
 description: >
-  Synthesize answers from the LLM Wiki knowledge base. Reads relevant wiki
+  Synthesize answers from the Agents Neuron knowledge base. Reads relevant wiki
   pages, constructs an answer with inline citations, and logs the query for
   filter evolution. Triggers on: neuron query, neuron q.
 ---
@@ -33,9 +33,9 @@ If no relevant pages are found, skip to Step 5 (Knowledge Gaps).
 
 Construct an answer that:
 - **Directly addresses the question** — lead with the answer, not background.
-- **Cites wiki pages inline** — use `[[LLM-Wiki/Type/Page Name]]` for wiki pages, and `[[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Name]]` for direct source references.
+- **Cites wiki pages inline** — use `[[Agents-Neuron/Type/Page Name]]` for wiki pages, and `[[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Name]]` for direct source references.
 - **Cross-references related pages** — mention related wiki pages the user might want to explore.
-- **Is concise** — this is a neuron query, not an essay. A few paragraphs max.
+- **Is concise** — this is an Agents Neuron query, not an essay. A few paragraphs max.
 
 Format the response as markdown (Obsidian-compatible).
 
@@ -83,5 +83,5 @@ Handle these patterns:
 ## Important
 
 - **Never hallucinate wiki content.** If a page doesn't exist, say so. Don't make up facts and attribute them to non-existent pages.
-- **Cite specifically.** Don't say "according to the wiki" — say "according to [[LLM-Wiki/Concepts/Event Sourcing]]".
+- **Cite specifically.** Don't say "according to the wiki" — say "according to [[Agents-Neuron/Concepts/Event Sourcing]]".
 - **Stay within the wiki.** The query skill answers from wiki pages only, not from general knowledge. If the user wants general knowledge, they should ask outside the wiki context.

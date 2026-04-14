@@ -1,7 +1,7 @@
 SKILL_NAME  := neuron
 SKILL_DIR   := $(CURDIR)/skill
 REPO_DIR    := $(CURDIR)
-CONFIG_DIR  := $(HOME)/.llm-wiki
+CONFIG_DIR  := $(HOME)/.agents-neuron
 
 AGENTS_SKILLS := $(HOME)/.agents/skills
 CLAUDE_SKILLS := $(HOME)/.claude/skills

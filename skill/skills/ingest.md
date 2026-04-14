@@ -2,7 +2,7 @@
 name: neuron-ingest
 description: >
   Filter pending sources by relevance and transform qualifying ones into
-  Obsidian-native wiki pages. The core engine of LLM Wiki. Reads the identity
+  Obsidian-native wiki pages. The core engine of Agents Neuron. Reads the identity
   filter, scores each source, creates/updates wiki pages with frontmatter,
   wikilinks, and source citations. Triggers on: neuron ingest.
 ---
@@ -51,7 +51,7 @@ For each pending source, apply the identity filter:
 **Present the scoring to the user** before creating pages:
 
 ```
-Source: 2026-04-11-karpathy-llm-wiki.md
+Source: 2026-04-11-karpathy-agents-neuron.md
 Scores:
   Engineering & Architecture: 0.6 × 0.25 = 0.150
   AI & LLM Agents:           0.9 × 0.20 = 0.180
@@ -99,24 +99,24 @@ For each page to create or update:
    - `updated`: Today's date.
    - `sources`: Wikilinks to ALL contributing source files.
    - `related`: Wikilinks to related wiki pages (scan existing pages for connections).
-   - `tags`: `llm-wiki/{type}` plus domain tags.
+   - `tags`: `agents-neuron/{type}` plus domain tags.
    - `relevance_score`: The filter score.
    - `aliases`: Short names, abbreviations, alternate spellings.
 
 3. **Write page content** following the template structure for the page type.
-   - Every factual claim must have an inline citation: `[[LLM-Wiki-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]`
-   - Use wikilinks to reference other wiki pages: `[[LLM-Wiki/Concepts/Some Concept]]`
+   - Every factual claim must have an inline citation: `[[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]`
+   - Use wikilinks to reference other wiki pages: `[[Agents-Neuron/Concepts/Some Concept]]`
    - Keep content concise and structured. This is a wiki, not an essay.
 
 4. **Save the file** to `WIKI/{Type}/{Page Title}.md`
    - File name = page title with spaces, Title Case.
-   - Example: `WIKI/Concepts/LLM Wiki.md`
+   - Example: `WIKI/Concepts/Agents Neuron.md`
 
 ## Step 5: Update Source Frontmatter
 
 For each ingested source, run the script:
 ```sh
-SKILL_DIR/scripts/update-source-meta.sh <filepath> --ingested true --score <score> --wiki-pages '["[[LLM-Wiki/Type/Page]]"]'
+SKILL_DIR/scripts/update-source-meta.sh <filepath> --ingested true --score <score> --wiki-pages '["[[Agents-Neuron/Type/Page]]"]'
 ```
 
 This deterministically updates the frontmatter fields. Do NOT manually edit source frontmatter.
@@ -127,8 +127,8 @@ Read the current `_index.md` and update the appropriate sections. Between the `<
 
 ```markdown
 <!-- CONCEPTS_START -->
-- [[LLM-Wiki/Concepts/Event Sourcing]] — Pattern for modeling state as a sequence of events
-- [[LLM-Wiki/Concepts/LLM Wiki]] — Persistent knowledge base maintained by LLM
+- [[Agents-Neuron/Concepts/Event Sourcing]] — Pattern for modeling state as a sequence of events
+- [[Agents-Neuron/Concepts/Agents Neuron]] — Persistent knowledge base maintained by LLM
 <!-- CONCEPTS_END -->
 ```
 
@@ -141,9 +141,9 @@ Summarize what happened:
 ```
 Ingested 2 sources:
 
-✓ 2026-04-11-karpathy-llm-wiki.md (score: 0.53)
-  → Created: LLM-Wiki/Concepts/LLM Wiki.md
-  → Created: LLM-Wiki/Entities/RAG.md
+✓ 2026-04-11-karpathy-agents-neuron.md (score: 0.53)
+  → Created: Agents-Neuron/Concepts/Agents Neuron.md
+  → Created: Agents-Neuron/Entities/RAG.md
 
 ✗ 2026-04-11-generic-press-release.md (score: 0.02)
   → Skipped (below threshold)

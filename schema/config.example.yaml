@@ -1,4 +1,4 @@
-# Path to the vault where LLM-Wiki/ and LLM-Wiki-Sources/ will be created.
+# Path to the vault where Agents-Neuron/ and Agents-Neuron-Sources/ will be created.
 vault_path: "~/path/to/your/wiki-vault"
 
 # Your personal note vaults to scan for new content.
@@ -8,8 +8,8 @@ user_vaults:
   - "~/path/to/your/main-notes-vault"
   # - "~/path/to/another-vault"
 
-wiki_folder: "LLM-Wiki"
-sources_folder: "LLM-Wiki-Sources"
+wiki_folder: "Agents-Neuron"
+sources_folder: "Agents-Neuron-Sources"
 
 page_types:
   - entity
@@ -18,6 +18,6 @@ page_types:
   - recipe
   - comparison
 
-tag_prefix: "llm-wiki"
+tag_prefix: "agents-neuron"
 min_relevance_score: 0.4
 source_date_format: "YYYY-MM-DD"

@@ -27,7 +27,7 @@ neuron/
 │   └── troubleshooting.md
 ├── helpers/                         # OS-level automation helpers
 │   └── setup-launchd.sh             # macOS launchd agents for daily/weekly jobs
-├── schema/                          # Config templates (copied to ~/.llm-wiki/ by make install)
+├── schema/                          # Config templates (copied to ~/.agents-neuron/ by make install)
 │   ├── config.example.yaml
 │   ├── filter-identity.example.md
 │   └── query-log.example.md
@@ -58,18 +58,18 @@ neuron/
 
 ## Vault structure
 
-The Obsidian vault gets two top-level folders managed by Neuron:
+The Obsidian vault gets two top-level folders managed by Agents Neuron:
 
 ```
 Your Obsidian vault/
-├── LLM-Wiki/                        # Wiki pages (LLM-maintained)
+├── Agents-Neuron/                   # Wiki pages (LLM-maintained)
 │   ├── _index.md                    # Map of Content
 │   ├── Entities/
 │   ├── Concepts/
 │   ├── Topics/
 │   ├── Recipes/
 │   └── Comparisons/
-└── LLM-Wiki-Sources/                # Raw imported sources (immutable)
+└── Agents-Neuron-Sources/           # Raw imported sources (immutable)
     └── {year}/
 ```
 
