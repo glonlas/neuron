@@ -1,4 +1,4 @@
-# Path to the vault where Agents-Neuron/ and Agents-Neuron-Sources/ will be created.
+# Path to the vault where Neuron/ and Neuron-Sources/ will be created.
 vault_path: "~/path/to/your/wiki-vault"
 
 # Your personal note vaults to scan for new content.
@@ -9,7 +9,7 @@ user_vaults:
   # - "~/path/to/another-vault"
 
 wiki_folder: "Agents-Neuron"
-sources_folder: "Agents-Neuron-Sources"
+sources_folder: "Neuron-Sources"
 
 page_types:
   - entity

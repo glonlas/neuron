@@ -55,6 +55,6 @@ Throughout all sub-skills, use these path variables:
 - `SKILL_DIR`: the skill repo root — skill instruction files only
 - `VAULT`: value of `vault_path` from `CONFIG_DIR/config.yaml`
 - `WIKI`: `VAULT/Agents-Neuron`
-- `SOURCES`: `VAULT/Agents-Neuron-Sources`
+- `SOURCES`: `VAULT/Neuron-Sources`
 
 Always quote paths containing spaces when using shell commands.

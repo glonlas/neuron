@@ -47,7 +47,7 @@ neuron add https://www.reddit.com/r/LocalLLaMA/comments/1s49lvh/gguf_llamacpp_vs
 neuron ingest
 ```
 
-Agents Neuron fetches the thread, scores it against your identity filter, and — if it clears your relevance threshold — creates a structured wiki page (e.g. `Agents-Neuron/Comparisons/GGUF llama.cpp vs MLX.md`) with inline citations back to the source.
+Agents Neuron fetches the thread, scores it against your identity filter, and — if it clears your relevance threshold — creates a structured wiki page (e.g. `Neuron/Comparisons/GGUF llama.cpp vs MLX.md`) with inline citations back to the source.
 
 ---
 

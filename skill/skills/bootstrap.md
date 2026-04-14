@@ -16,7 +16,7 @@ Initialize the Agents Neuron folder structure in the Obsidian vault and draft an
    - If not, create it: `mkdir -p ~/.agents-neuron`
    - If `CONFIG_DIR/config.yaml` doesn't exist, copy from `SKILL_DIR/schema/config.example.yaml` and prompt the user to set their vault path before continuing.
 2. Read `CONFIG_DIR/config.yaml` to get the vault path.
-3. Check if `VAULT/Agents-Neuron/` already exists.
+3. Check if `VAULT/Neuron/` already exists.
    - If it does, warn the user: "Agents Neuron is already initialized. Re-running will not overwrite existing content." Only create missing folders/files.
    - If it doesn't, proceed with full initialization.
 
@@ -25,21 +25,21 @@ Initialize the Agents Neuron folder structure in the Obsidian vault and draft an
 Create the following directories in the Obsidian vault:
 
 ```
-VAULT/Agents-Neuron/
-VAULT/Agents-Neuron/Entities/
-VAULT/Agents-Neuron/Concepts/
-VAULT/Agents-Neuron/Topics/
-VAULT/Agents-Neuron/Recipes/
-VAULT/Agents-Neuron/Comparisons/
-VAULT/Agents-Neuron-Sources/
-VAULT/Agents-Neuron-Sources/{current_year}/
+VAULT/Neuron/
+VAULT/Neuron/Entities/
+VAULT/Neuron/Concepts/
+VAULT/Neuron/Topics/
+VAULT/Neuron/Recipes/
+VAULT/Neuron/Comparisons/
+VAULT/Neuron-Sources/
+VAULT/Neuron-Sources/{current_year}/
 ```
 
 Use `mkdir -p` with properly quoted paths (vault paths may contain spaces).
 
 ## Step 2: Create _index.md (Map of Content)
 
-Write `VAULT/Agents-Neuron/_index.md`:
+Write `VAULT/Neuron/_index.md`:
 
 ```markdown
 ---

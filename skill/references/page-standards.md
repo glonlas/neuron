@@ -13,9 +13,9 @@ type: entity | concept | topic | recipe | comparison
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 sources:
-  - "[[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug]]"
+  - "[[Neuron-Sources/YYYY/YYYY-MM-DD-slug]]"
 related:
-  - "[[Agents-Neuron/Type/Related Page]]"
+  - "[[Neuron/Type/Related Page]]"
 tags:
   - agents-neuron/{type}
   - agents-neuron/{domain}
@@ -56,7 +56,7 @@ Operational overview. What does it do at runtime or in practice?
 Known issues, edge cases, common mistakes.
 
 ## Sources
-- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -82,7 +82,7 @@ What happens when this concept is applied incorrectly or ignored?
 The practical value. Why should someone care about this concept?
 
 ## Sources
-- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -97,11 +97,11 @@ What this topic covers and what it explicitly does NOT cover.
 
 ## Key Entities
 Links to entity pages within this topic:
-- [[Agents-Neuron/Entities/Entity Name]] — brief note on relevance
+- [[Neuron/Entities/Entity Name]] — brief note on relevance
 
 ## Key Concepts
 Links to concept pages within this topic:
-- [[Agents-Neuron/Concepts/Concept Name]] — brief note on relevance
+- [[Neuron/Concepts/Concept Name]] — brief note on relevance
 
 ## Main Patterns
 Recurring themes, workflows, or approaches observed across this topic.
@@ -110,7 +110,7 @@ Recurring themes, workflows, or approaches observed across this topic.
 What's settled, what's in flux, what gaps remain in our understanding.
 
 ## Sources
-- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -138,7 +138,7 @@ How to confirm the recipe worked. Expected output or result.
 Alternative approaches, substitutions, tips from experience.
 
 ## Sources
-- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -167,7 +167,7 @@ The most important distinctions, explained in prose.
 Decision guidance: under what circumstances is each subject the better choice?
 
 ## Sources
-- [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
+- [[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]
 ```
 
 ---
@@ -176,7 +176,7 @@ Decision guidance: under what circumstances is each subject the better choice?
 
 When referencing a source within page content, use:
 ```
-According to [[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Author/Title YYYY]], ...
+According to [[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Author/Title YYYY]], ...
 ```
 
 This creates a clickable link in Obsidian that displays the friendly name but links to the source file.
@@ -186,6 +186,6 @@ This creates a clickable link in Obsidian that displays the friendly name but li
 ## Naming Conventions
 
 - **File names**: Use Title Case with spaces (Obsidian handles this well). Example: `Event Sourcing.md`
-- **Folder structure**: `Agents-Neuron/{Type}/{Page Name}.md`
-- **Source files**: `Agents-Neuron-Sources/{year}/{YYYY-MM-DD}-{slug}.md` where slug is lowercase-kebab-case.
+- **Folder structure**: `Neuron/{Type}/{Page Name}.md`
+- **Source files**: `Neuron-Sources/{year}/{YYYY-MM-DD}-{slug}.md` where slug is lowercase-kebab-case.
 - **No nested sub-folders** within type folders. Keep it flat per type.

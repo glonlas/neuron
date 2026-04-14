@@ -62,14 +62,14 @@ The Obsidian vault gets two top-level folders managed by Agents Neuron:
 
 ```
 Your Obsidian vault/
-├── Agents-Neuron/                   # Wiki pages (LLM-maintained)
+├── Neuron/                   # Wiki pages (LLM-maintained)
 │   ├── _index.md                    # Map of Content
 │   ├── Entities/
 │   ├── Concepts/
 │   ├── Topics/
 │   ├── Recipes/
 │   └── Comparisons/
-└── Agents-Neuron-Sources/           # Raw imported sources (immutable)
+└── Neuron-Sources/           # Raw imported sources (immutable)
     └── {year}/
 ```
 

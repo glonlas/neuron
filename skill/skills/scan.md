@@ -116,8 +116,8 @@ Scan complete — 2026-04-11T09:32:00
 Vaults scanned: 1 (My Notes)
 Notes found: 4 | Imported: 3 (1 duplicate skipped) | Ingested: 3
 
-  ✓ Work/Engineering/Event Sourcing Research.md  → Created: Agents-Neuron/Concepts/Event Sourcing.md
-  ✓ Cooking - Recipes/Miso Ramen.md              → Created: Agents-Neuron/Recipes/Miso Ramen.md
+  ✓ Work/Engineering/Event Sourcing Research.md  → Created: Neuron/Concepts/Event Sourcing.md
+  ✓ Cooking - Recipes/Miso Ramen.md              → Created: Neuron/Recipes/Miso Ramen.md
   ✗ Personal/Health/Sleep Tracking.md            → Skipped (score: 0.12, below threshold)
 
 Next scan will pick up notes modified after: 2026-04-11T09:32:00

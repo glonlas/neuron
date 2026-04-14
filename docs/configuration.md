@@ -26,7 +26,7 @@ user_vaults:
 
 # Customizable folder names (defaults shown)
 wiki_folder: "Agents-Neuron"
-sources_folder: "Agents-Neuron-Sources"
+sources_folder: "Neuron-Sources"
 
 # Page types and scoring
 page_types:
@@ -85,6 +85,6 @@ Save the output to `~/.agents-neuron/filter-identity.md`. Alternatively, `neuron
 
 ### How the filter works
 
-The filter defines scoring dimensions and weights. Each source is scored 0-1 against each dimension; the weighted sum is compared against a minimum threshold (default: 0.4). Sources below the threshold are marked ingested but don't get wiki pages — they stay in `Agents-Neuron-Sources/` for reference without cluttering the wiki.
+The filter defines scoring dimensions and weights. Each source is scored 0-1 against each dimension; the weighted sum is compared against a minimum threshold (default: 0.4). Sources below the threshold are marked ingested but don't get wiki pages — they stay in `Neuron-Sources/` for reference without cluttering the wiki.
 
 Run `neuron filter evolve` periodically to tune weights based on what you actually query and link to. All filter changes require your approval and apply to future ingests only — existing pages are never retroactively removed.

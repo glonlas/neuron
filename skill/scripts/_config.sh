@@ -87,7 +87,7 @@ _strip_quotes() { sed 's/^"//;s/"$//;s/^'\''//;s/'\''$//'; }
 WIKI_FOLDER=$(awk '/^wiki_folder:/{print $2}' "$CONFIG_FILE" | _strip_quotes)
 WIKI_FOLDER="${WIKI_FOLDER:-Agents-Neuron}"
 SOURCES_FOLDER=$(awk '/^sources_folder:/{print $2}' "$CONFIG_FILE" | _strip_quotes)
-SOURCES_FOLDER="${SOURCES_FOLDER:-Agents-Neuron-Sources}"
+SOURCES_FOLDER="${SOURCES_FOLDER:-Neuron-Sources}"
 
 WIKI="${VAULT}/${WIKI_FOLDER}"
 SOURCES="${VAULT}/${SOURCES_FOLDER}"

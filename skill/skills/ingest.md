@@ -104,8 +104,8 @@ For each page to create or update:
    - `aliases`: Short names, abbreviations, alternate spellings.
 
 3. **Write page content** following the template structure for the page type.
-   - Every factual claim must have an inline citation: `[[Agents-Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]`
-   - Use wikilinks to reference other wiki pages: `[[Agents-Neuron/Concepts/Some Concept]]`
+   - Every factual claim must have an inline citation: `[[Neuron-Sources/YYYY/YYYY-MM-DD-slug|Display Name]]`
+   - Use wikilinks to reference other wiki pages: `[[Neuron/Concepts/Some Concept]]`
    - Keep content concise and structured. This is a wiki, not an essay.
 
 4. **Save the file** to `WIKI/{Type}/{Page Title}.md`
@@ -116,7 +116,7 @@ For each page to create or update:
 
 For each ingested source, run the script:
 ```sh
-SKILL_DIR/scripts/update-source-meta.sh <filepath> --ingested true --score <score> --wiki-pages '["[[Agents-Neuron/Type/Page]]"]'
+SKILL_DIR/scripts/update-source-meta.sh <filepath> --ingested true --score <score> --wiki-pages '["[[Neuron/Type/Page]]"]'
 ```
 
 This deterministically updates the frontmatter fields. Do NOT manually edit source frontmatter.
@@ -127,8 +127,8 @@ Read the current `_index.md` and update the appropriate sections. Between the `<
 
 ```markdown
 <!-- CONCEPTS_START -->
-- [[Agents-Neuron/Concepts/Event Sourcing]] — Pattern for modeling state as a sequence of events
-- [[Agents-Neuron/Concepts/Agents Neuron]] — Persistent knowledge base maintained by LLM
+- [[Neuron/Concepts/Event Sourcing]] — Pattern for modeling state as a sequence of events
+- [[Neuron/Concepts/Agents Neuron]] — Persistent knowledge base maintained by LLM
 <!-- CONCEPTS_END -->
 ```
 
@@ -142,8 +142,8 @@ Summarize what happened:
 Ingested 2 sources:
 
 ✓ 2026-04-11-karpathy-agents-neuron.md (score: 0.53)
-  → Created: Agents-Neuron/Concepts/Agents Neuron.md
-  → Created: Agents-Neuron/Entities/RAG.md
+  → Created: Neuron/Concepts/Agents Neuron.md
+  → Created: Neuron/Entities/RAG.md
 
 ✗ 2026-04-11-generic-press-release.md (score: 0.02)
   → Skipped (below threshold)

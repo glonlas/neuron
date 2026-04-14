@@ -1,7 +1,7 @@
 ---
 name: neuron-add
 description: >
-  Acquire a source into Agents-Neuron-Sources. Accepts URLs (fetches and converts
+  Acquire a source into Neuron-Sources. Accepts URLs (fetches and converts
   to markdown), pasted text, or references to existing vault notes. Each source
   becomes an immutable markdown file with metadata frontmatter.
   Triggers on: neuron add.
@@ -9,7 +9,7 @@ description: >
 
 # Wiki Import
 
-Acquire a raw source and save it to the `Agents-Neuron-Sources/` folder in the Obsidian vault. Sources are immutable after import — they represent the original material exactly as received.
+Acquire a raw source and save it to the `Neuron-Sources/` folder in the Obsidian vault. Sources are immutable after import — they represent the original material exactly as received.
 
 ## Input Modes
 
@@ -39,7 +39,7 @@ User references an existing vault note (e.g., `neuron add [[Some Note]]` or `neu
 Save to: `SOURCES/{current_year}/{YYYY-MM-DD}-{slug}.md`
 
 Where:
-- `SOURCES` = `VAULT/Agents-Neuron-Sources` (from config.yaml)
+- `SOURCES` = `VAULT/Neuron-Sources` (from config.yaml)
 - `{current_year}` = e.g., `2026`
 - `{YYYY-MM-DD}` = today's date
 - `{slug}` = lowercase-kebab-case derived from the title or URL. Max 60 characters. Examples:
@@ -91,13 +91,13 @@ After saving the source file:
 If the user provides multiple URLs or texts at once, import each one sequentially. Report a summary at the end:
 ```
 Imported 3 sources:
-- Agents-Neuron-Sources/2026/2026-04-11-karpathy-agents-neuron.md (2,340 words)
-- Agents-Neuron-Sources/2026/2026-04-11-baljanak-learning-filter.md (1,890 words)
-- Agents-Neuron-Sources/2026/2026-04-11-fastapi-deployment-guide.md (3,100 words)
+- Neuron-Sources/2026/2026-04-11-karpathy-agents-neuron.md (2,340 words)
+- Neuron-Sources/2026/2026-04-11-baljanak-learning-filter.md (1,890 words)
+- Neuron-Sources/2026/2026-04-11-fastapi-deployment-guide.md (3,100 words)
 ```
 
 ## Error Handling
 
 - If WebFetch fails, suggest the user paste the content manually.
-- If the vault path doesn't exist or Agents-Neuron-Sources/ is missing, suggest running `neuron bootstrap` first.
+- If the vault path doesn't exist or Neuron-Sources/ is missing, suggest running `neuron bootstrap` first.
 - If the year subfolder doesn't exist, create it with `mkdir -p`.

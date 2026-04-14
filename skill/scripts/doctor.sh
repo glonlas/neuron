@@ -67,7 +67,7 @@ if [ -f "$CONFIG_FILE" ]; then
         WIKI_FOLDER=$(awk '/^wiki_folder:/{print $2}' "$CONFIG_FILE" | sed 's/^"//;s/"$//')
         WIKI_FOLDER="${WIKI_FOLDER:-Agents-Neuron}"
         SOURCES_FOLDER=$(awk '/^sources_folder:/{print $2}' "$CONFIG_FILE" | sed 's/^"//;s/"$//')
-        SOURCES_FOLDER="${SOURCES_FOLDER:-Agents-Neuron-Sources}"
+        SOURCES_FOLDER="${SOURCES_FOLDER:-Neuron-Sources}"
 
         if [ -d "${VAULT}/${WIKI_FOLDER}" ]; then
             ok "${WIKI_FOLDER}/ exists"
