@@ -117,14 +117,21 @@ recipe
 comparison"
 fi
 
-# Capitalize first letter: entity → Entities (add trailing s for directory name)
+# Capitalize first letter and pluralize: entity → Entities, concept → Concepts
 _type_to_dir() {
     local t="$1"
-    local first upper rest
+    local first upper word plural
     first="${t:0:1}"
     upper=$(echo "$first" | tr '[:lower:]' '[:upper:]')
-    rest="${t:1}"
-    echo "${upper}${rest}s"
+    word="${upper}${t:1}"
+    case "$word" in
+        *[^aeiouAEIOU]y)  plural="${word%y}ies" ;;   # consonant+y → ies (entity→Entities)
+        *[sxz]|*[sc]h)    plural="${word}es" ;;       # s/x/z/sh/ch → es (class→Classes)
+        *fe)               plural="${word%fe}ves" ;;   # fe → ves (knife→Knives)
+        *[^aeiouAEIOU]f)  plural="${word%f}ves" ;;    # consonant+f → ves (leaf→Leaves)
+        *)                 plural="${word}s" ;;
+    esac
+    echo "$plural"
 }
 
 # Parse user_vaults list — prints one path per line, strips quotes.
