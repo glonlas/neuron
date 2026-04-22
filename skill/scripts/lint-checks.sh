@@ -64,6 +64,9 @@ run_orphan_sources() {
         ingested=$(sed -n 's/^ingested: *\(.*\)/\1/p' "$f" | head -1)
         [ "$ingested" != "true" ] && continue
         wiki_pages=$(sed -n 's/^wiki_pages: *\(.*\)/\1/p' "$f" | head -1)
+        if [ -z "$wiki_pages" ] && grep -q '^wiki_pages:' "$f"; then
+            grep -A1 '^wiki_pages:' "$f" | tail -1 | grep -q '^ *-' && wiki_pages="(array)"
+        fi
         score=$(sed -n 's/^relevance_score: *\(.*\)/\1/p' "$f" | head -1)
         if [ "$wiki_pages" = "[]" ] || [ -z "$wiki_pages" ]; then
             # Only flag if score was above threshold (real orphan, not just filtered out)

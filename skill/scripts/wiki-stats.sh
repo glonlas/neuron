@@ -20,7 +20,7 @@ source "${SCRIPT_DIR}/_config.sh"
 count_md() {
     local dir="$1"
     if [ -d "$dir" ]; then
-        find "$dir" -maxdepth 1 -name "*.md" 2>/dev/null | wc -l | tr -d ' '
+        find "$dir" -name "*.md" ! -name "_index.md" 2>/dev/null | wc -l | tr -d ' '
     else
         echo 0
     fi
@@ -53,6 +53,9 @@ if [ -d "$SOURCES" ]; then
         ingested=$(sed -n 's/^ingested: *\(.*\)/\1/p' "$f" | head -1)
         score=$(sed -n 's/^relevance_score: *\(.*\)/\1/p' "$f" | head -1)
         wiki_pages=$(sed -n 's/^wiki_pages: *\(.*\)/\1/p' "$f" | head -1)
+        if [ -z "$wiki_pages" ] && grep -q '^wiki_pages:' "$f"; then
+            grep -A1 '^wiki_pages:' "$f" | tail -1 | grep -q '^ *-' && wiki_pages="(array)"
+        fi
 
         if [ "$ingested" = "false" ]; then
             pending_sources=$((pending_sources + 1))
