@@ -38,9 +38,21 @@ wikilink_exists() {
     return 1
 }
 
-# Extract frontmatter value
+# Extract frontmatter value; returns "(array)" for multi-line YAML list fields
 fm_value() {
-    sed -n "/^---$/,/^---$/{ s/^${1}: *//p; }" "$2" | head -1
+    awk -v field="$1" '
+        /^---$/ { fm_count++; next }
+        fm_count == 1 {
+            if ($0 ~ ("^" field ":")) {
+                val = $0
+                sub("^" field ": *", "", val)
+                if (val != "") { print val; exit }
+                if ((getline nextline) > 0 && nextline ~ /^ *-/) print "(array)"
+                exit
+            }
+        }
+        fm_count >= 2 { exit }
+    ' "$2" | head -1
 }
 
 # ---------- checks ----------
